@@ -13,9 +13,11 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContent } from './screens/DrawerContent';
 
 import MainTabScreen from './screens/MainTabScreen';
-import SupportScreen from './screens/SupportScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import BookmarkScreen from './screens/BookmarkScreen';
+import LoginScreen from './screens/LoginScreen';
+import CheckInOutScreen from './screens/CheckInOutScreen';
+import SiteVisitScreen from './screens/SiteVisitScreen';
+import PatrollScreen from './screens/PatrollScreen';
+import IncidentScreen from './screens/IncidentScreen'
 
 const Drawer = createDrawerNavigator();
 
@@ -23,11 +25,13 @@ const Drawer = createDrawerNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>        
         <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-        <Drawer.Screen name="SupportScreen" component={SupportScreen} />
-        <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
-        <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />
+        <Drawer.Screen name="LoginScreen" component={LoginScreen} />
+        <Drawer.Screen name="CheckInOutScreen" component={CheckInOutScreen} />
+        <Drawer.Screen name="SiteVisitScreen" component={SiteVisitScreen} />
+        <Drawer.Screen name="PatrollScreen" component={PatrollScreen} />
+        <Drawer.Screen name="IncidentScreen" component={IncidentScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
