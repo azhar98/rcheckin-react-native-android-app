@@ -17,13 +17,17 @@ import LoginScreen from './screens/LoginScreen';
 import CheckInOutScreen from './screens/CheckInOutScreen';
 import SiteVisitScreen from './screens/SiteVisitScreen';
 import PatrollScreen from './screens/PatrollScreen';
-import IncidentScreen from './screens/IncidentScreen'
+import IncidentScreen from './screens/IncidentScreen';
+import SettingScreen from './screens/SettingScreen';
+import store from './store/index';
+import { Provider } from 'react-redux';
 
 const Drawer = createDrawerNavigator();
 
 
 const App = () => {
   return (
+    <Provider store={store}>
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>        
         <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
@@ -32,8 +36,10 @@ const App = () => {
         <Drawer.Screen name="SiteVisitScreen" component={SiteVisitScreen} />
         <Drawer.Screen name="PatrollScreen" component={PatrollScreen} />
         <Drawer.Screen name="IncidentScreen" component={IncidentScreen} />
+        <Drawer.Screen name="SettingScreen" component={SettingScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 
