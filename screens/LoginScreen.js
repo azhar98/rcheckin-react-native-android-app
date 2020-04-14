@@ -1,35 +1,34 @@
 import React, { Component } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 
-
-class HomeScreen extends Component {
+class LoginScreen extends Component {
   constructor(props) {
     super(props);
 }
   render(){
-    const HomeScreen = () => {
+    const LoginScreen = () => {
       return (
         <View style={styles.container}>
-          <Text>Home Screen</Text>
+          <Text>Login Screen</Text>
           <Button
             title="Click Here"
             onPress={() => alert('Button Clicked!')}
           />
           <Button
-              title="Go to LoginScreen"
-              onPress={() => this.props.navigation.navigate('LoginScreen')}
+              title="Go to home"
+              onPress={() => this.props.navigation.navigate('SupportScreen')}
           />
         </View>
       );
   };
     return(
-      <HomeScreen></HomeScreen>
+      <LoginScreen></LoginScreen>
     )
   }
 }
 
 
-export default HomeScreen;
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {
@@ -38,5 +37,3 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 });
-
-

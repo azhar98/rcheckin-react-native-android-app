@@ -15,7 +15,7 @@ import {
     DrawerItem
 } from '@react-navigation/drawer';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export function DrawerContent(props) {
 
@@ -42,24 +42,13 @@ export function DrawerContent(props) {
                                 <Caption style={styles.caption}>@itzpradip</Caption>
                             </View>
                         </View>
-
-                        <View style={styles.row}>
-                            <View style={styles.section}>
-                                <Paragraph style={[styles.paragraph, styles.caption]}>80</Paragraph>
-                                <Caption style={styles.caption}>Following</Caption>
-                            </View>
-                            <View style={styles.section}>
-                                <Paragraph style={[styles.paragraph, styles.caption]}>100</Paragraph>
-                                <Caption style={styles.caption}>Followers</Caption>
-                            </View>
-                        </View>
                     </View>
 
                     <Drawer.Section style={styles.drawerSection}>
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="home-outline" 
+                                name="ios-home" 
                                 color={color}
                                 size={size}
                                 />
@@ -70,46 +59,35 @@ export function DrawerContent(props) {
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="account-outline" 
+                                name="ios-checkmark-circle-outline" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Profile"
-                            onPress={() => {props.navigation.navigate('Profile')}}
+                            label="CheckIn/Out"
+                            onPress={() => {props.navigation.navigate('CheckInOutScreen')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="bookmark-outline" 
+                                name="ios-navigate" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Bookmarks"
-                            onPress={() => {props.navigation.navigate('BookmarkScreen')}}
+                            label="Site Visit"
+                            onPress={() => {props.navigation.navigate('SiteVisitScreen')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
                                 <Icon 
-                                name="settings-outline" 
+                                name="ios-people" 
                                 color={color}
                                 size={size}
                                 />
                             )}
-                            label="Settings"
-                            onPress={() => {props.navigation.navigate('SettingScreen')}}
-                        />
-                        <DrawerItem 
-                            icon={({color, size}) => (
-                                <Icon 
-                                name="account-check-outline" 
-                                color={color}
-                                size={size}
-                                />
-                            )}
-                            label="Support"
-                            onPress={() => {props.navigation.navigate('SupportScreen')}}
+                            label="Patroll"
+                            onPress={() => {props.navigation.navigate('PatrollScreen')}}
                         />
                     </Drawer.Section>
                     
@@ -126,6 +104,19 @@ export function DrawerContent(props) {
                     )}
                     label="Sign Out"
                     onPress={() => {}}
+                />
+            </Drawer.Section>
+            <Drawer.Section style={styles.bottomDrawerSection}>
+                <DrawerItem 
+                    icon={({color, size}) => (
+                        <Icon 
+                        name="exit-to-app" 
+                        color={color}
+                        size={size}
+                        />
+                    )}
+                    label="Sign In"
+                    onPress={() => {props.navigation.navigate('LoginScreen')}}
                 />
             </Drawer.Section>
         </View>

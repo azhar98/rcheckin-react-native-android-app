@@ -6,12 +6,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from './HomeScreen';
-import DetailsScreen from './DetailsScreen';
-import ExploreScreen from './ExploreScreen';
-import ProfileScreen from './ProfileScreen';
+import CheckInOutScreen from './CheckInOutScreen';
+import SiteVisitScreen from './SiteVisitScreen';
+import PatrollScreen from './PatrollScreen';
+import IncidentScreen from './IncidentScreen'
 
 const HomeStack = createStackNavigator();
-const DetailsStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -32,35 +32,46 @@ const MainTabScreen = () => (
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={DetailsStackScreen}
+        name="CheckIn/Out"
+        component={CheckInOutScreen}
         options={{
-          tabBarLabel: 'Updates',
+          tabBarLabel: 'CheckIn/Out',
           tabBarColor: '#1f65ff',
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-notifications" color={color} size={26} />
+            <Icon name="ios-checkmark-circle-outline" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
+        name="SiteVisit"
+        component={SiteVisitScreen}
         options={{
-          tabBarLabel: 'Profile',
+          tabBarLabel: 'SiteVisit',
           tabBarColor: '#694fad',
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-person" color={color} size={26} />
+            <Icon name="ios-navigate" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
-        name="Explore"
-        component={ExploreScreen}
+        name="Patroll"
+        component={PatrollScreen}
         options={{
-          tabBarLabel: 'Explore',
+          tabBarLabel: 'Patroll',
           tabBarColor: '#d02860',
           tabBarIcon: ({ color }) => (
-            <Icon name="ios-aperture" color={color} size={26} />
+            <Icon name="ios-people" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Incident"
+        component={IncidentScreen}
+        options={{
+          tabBarLabel: 'Incident',
+          tabBarColor: '#d02860',
+          tabBarIcon: ({ color }) => (
+            <Icon name="ios-warning" color={color} size={26} />
           ),
         }}
       />
@@ -87,22 +98,3 @@ const HomeStackScreen = ({navigation}) => (
         }} />
 </HomeStack.Navigator>
 );
-
-const DetailsStackScreen = ({navigation}) => (
-<DetailsStack.Navigator screenOptions={{
-        headerStyle: {
-        backgroundColor: '#1f65ff',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-        fontWeight: 'bold'
-        }
-    }}>
-        <DetailsStack.Screen name="Details" component={DetailsScreen} options={{
-        headerLeft: () => (
-            <Icon.Button name="ios-menu" size={25} backgroundColor="#1f65ff" onPress={() => navigation.openDrawer()}></Icon.Button>
-        )
-        }} />
-</DetailsStack.Navigator>
-);
-  
