@@ -12,6 +12,7 @@ import PatrollScreen from './PatrollScreen';
 import IncidentScreen from './IncidentScreen'
 
 const HomeStack = createStackNavigator();
+const CheckInOut = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -33,7 +34,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="CheckIn/Out"
-        component={CheckInOutScreen}
+        component={CheckInOutStackScreen}
         options={{
           tabBarLabel: 'CheckIn/Out',
           tabBarColor: '#1f65ff',
@@ -102,4 +103,27 @@ const HomeStackScreen = ({navigation}) => (
         }} />
 </HomeStack.Navigator>
 );
+
+const CheckInOutStackScreen = ({navigation}) => (
+  <CheckInOut.Navigator screenOptions={{
+          headerStyle: {
+          backgroundColor: '#557afef7',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+          fontWeight: 'bold'
+          }
+      }}>
+          <CheckInOut.Screen name="CheckInOut" component={CheckInOutScreen} options={{
+          title:'Check In/Out',
+          headerTitleAlign:'center',
+          headerLeft: () => (
+              <Icon.Button name="ios-menu" size={25} backgroundColor="#557afef7" onPress={() => navigation.openDrawer()}></Icon.Button>
+          ),
+          headerRight: () => (
+              <Icon.Button name="ios-settings" size={25} backgroundColor="#557afef7" onPress={() => navigation.navigate('SettingScreen')}></Icon.Button>
+          )
+          }} />
+  </CheckInOut.Navigator>
+  );
 

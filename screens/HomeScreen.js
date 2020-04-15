@@ -43,6 +43,10 @@ componentWillUnmount() {
 }
 
   async componentDidMount() {
+    console.log('home',this.props.userState)
+    if(this.props.userState.userDetails.token==null){
+      this.props.navigation.navigate("LoginScreen")
+    }
 
 
     // const { status } = await Location.requestPermissionsAsync();

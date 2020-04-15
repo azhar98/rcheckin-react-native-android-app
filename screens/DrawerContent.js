@@ -73,7 +73,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="CheckIn/Out"
-                            onPress={() => {props.navigation.navigate('CheckInOutScreen')}}
+                            onPress={() => {props.navigation.navigate('CheckInOut')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
