@@ -14,7 +14,7 @@ import {
   ToastAndroid,
   ScrollView
 } from 'react-native';
-import { CheckBox, Button, ListItem } from 'react-native-elements';
+import { CheckBox, Button, ListItem ,Header} from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { RNCamera } from 'react-native-camera';
 navigator.geolocation = require('@react-native-community/geolocation');
@@ -102,6 +102,11 @@ class PatrollScreen extends Component {
     console.log('Patrol', successMessage)
     return (
       <View style={styles.container}>
+      <Header
+            leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer()}}
+            centerComponent={{ text: 'Patroll', style: { color: '#fff' } }}
+            rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('SettingScreen')}}
+        />
         <View style={{ height: 50, backgroundColor: '#f4f0f0d6', justifyContent: 'center', paddingLeft: 10, }}>
           <Text style={{ fontWeight: 'bold' }}>Track With</Text>
         </View>

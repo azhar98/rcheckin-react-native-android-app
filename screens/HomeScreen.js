@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 navigator.geolocation = require('@react-native-community/geolocation')
 import LinearGradient from 'react-native-linear-gradient';
-
+import { createStackNavigator } from '@react-navigation/stack';
 //import { LinearGradient } from 'expo-linear-gradient';
 
 //import { PERMISSIONS } from 'react-native-permissions';
@@ -109,16 +109,17 @@ componentWillUnmount() {
   _card(name) {
     console.log('Card: ' + name)
     if (name === "Check In/Out") {
-      this.props.navigation.navigate("CheckInOut")
+     this.props.navigation.navigate("CheckInOutScreen")
+      
     }
     if (name === "Site Visit") {
-      this.props.navigation.navigate("SiteVisit")
+      this.props.navigation.navigate("SiteVisitScreen")
     }
     if (name === "Patrol") {
-      this.props.navigation.navigate("Patroll")
+      this.props.navigation.navigate("PatrollScreen")
     }
     if (name === "Incident") {
-      this.props.navigation.navigate("Incident")
+      this.props.navigation.navigate("IncidentScreen")
     }
 
   };
