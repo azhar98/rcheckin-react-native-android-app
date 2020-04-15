@@ -16,7 +16,7 @@ import {
     Switch,
     ScrollView
 } from 'react-native';
-import { CheckBox, Button, ListItem } from 'react-native-elements';
+import { CheckBox, Button, ListItem, Header } from 'react-native-elements';
 import styles from '../StyleSheets/LoginStyle';
 
 class SettingScreen extends Component {
@@ -27,32 +27,32 @@ class SettingScreen extends Component {
 
     listiten(i) {
         console.log('key', i.name)
-        if(i.name==='Scan Tags to be Defined'){
+        if (i.name === 'Scan Tags to be Defined') {
             this.props.navigation.navigate("TagDefined")
         }
-        if(i.name==='Days to keep History'){
+        if (i.name === 'Days to keep History') {
             this.props.navigation.navigate("History")
         }
-        
+
     }
 
     onChangeFunction(newState) {
-        console.log('toggle',newState)
+        console.log('toggle', newState)
         const { call911 } = this.props.userState;
         //this.setState(newState, () => Alert.alert("Changed", "==> " + this.state));
-        if(call911){
-            this.props.updateState({ call911:false });
-        }else{
-            this.props.updateState({ call911:true });
+        if (call911) {
+            this.props.updateState({ call911: false });
+        } else {
+            this.props.updateState({ call911: true });
         }
-        
+
     }
 
     render() {
-        const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, accountButton,mainButton,call911 } = this.props.userState;
+        const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, accountButton, mainButton, call911 } = this.props.userState;
         return (
             <View style={styles.container}>
-                <ImageBackground source={require('../../assets/setting.png')} style={styles.backgroundImage}>
+                <ImageBackground source={require('../assets/setting.png')} style={styles.backgroundImage}>
                     <ScrollView>
                         {/* <View style={{ padding: 10, justifyContent: 'center', alignItems: 'stretch', marginTop: 50,}}>
                             <View style={{ padding: 20, }}>
@@ -84,20 +84,24 @@ class SettingScreen extends Component {
                             </View>
                         </View> */}
 
-
+                        <Header
+                            leftComponent={{ icon: 'menu', color: '#fff' }}
+                            centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                            rightComponent={{ icon: 'home', color: '#fff' }}
+                        />
                         <View style={{ padding: 10, justifyContent: 'center', alignItems: 'stretch', }}>
                             <View style={{ padding: 20, }}>
                                 <View>
                                     <Text style={{ fontWeight: 'bold' }}>MAIN</Text>
                                 </View>
                             </View>
-                            <View style={{ flexDirection: 'row', backgroundColor: 'white', padding: 15, justifyContent: 'space-between',marginBottom:2 }}>
+                            <View style={{ flexDirection: 'row', backgroundColor: 'white', padding: 15, justifyContent: 'space-between', marginBottom: 2 }}>
                                 <View>
                                     <Text>Enable "Call 911" Button</Text>
                                 </View>
                                 <View>
                                     <Switch
-                                        onValueChange={(value) => this.onChangeFunction({taskCreated: value})}
+                                        onValueChange={(value) => this.onChangeFunction({ taskCreated: value })}
                                         value={call911} />
                                 </View>
                             </View>
@@ -107,7 +111,7 @@ class SettingScreen extends Component {
                                         key={i}
                                         title={item.name}
                                         bottomDivider
-                                        chevron={{ color: 'gray',size:25 }}
+                                        chevron={{ color: 'gray', size: 25 }}
                                         onPress={() => { this.listiten(item) }}
 
                                     />
