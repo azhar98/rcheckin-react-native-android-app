@@ -11,7 +11,8 @@ import {
   StyleSheet,
   Button,
   TouchableOpacity,
-  Image
+  Image,
+  Linking
 } from 'react-native';
 navigator.geolocation = require('@react-native-community/geolocation')
 import LinearGradient from 'react-native-linear-gradient';
@@ -27,12 +28,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // import { EventEmitter } from 'fbemitter';
 // import { URI } from '../../constants';
 //const eventEmitter = new EventEmitter();
-const items = [
-  { name: 'Check In/Out', background: '#2898fed6', icon: 'check-circle-o', },
-  { name: 'Site Visit', background: '#2898fed6', icon: 'map-marker' },
-  { name: 'Patrol', background: '#2898fed6', icon: 'user-secret' },
-  { name: 'Incident', background: '#2898fed6', icon: 'warning' },
-];
+
 
 
 class HomeScreen extends Component {
@@ -104,6 +100,13 @@ componentWillUnmount() {
   geoFailure = (err) => {
     console.log('err', err);
     //this.setState({ error: err.message });
+  }
+
+  call(number){
+    let phoneNumber = '';
+    if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
+    else {phoneNumber = `telprompt:${number}`; }
+    Linking.openURL(phoneNumber);
   }
 
   _card(name) {

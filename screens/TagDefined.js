@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { userLogin, userRegistration, updateState,userUploadScannedTag } from '../../actions/user';
+import { userLogin, userRegistration, updateState,userUploadScannedTag } from '../actions/user';
 
 import {
     Text,
@@ -15,11 +15,9 @@ import {
     TextInput,
     ScrollView
 } from 'react-native';
-import { CheckBox, Button, ListItem } from 'react-native-elements';
+import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
 import Modal from 'react-native-modal';
-import * as Permissions from 'expo-permissions';
-
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { RNCamera } from 'react-native-camera';
 
 
 class TagDefined extends Component {
@@ -93,18 +91,12 @@ class TagDefined extends Component {
     render() {
         const { userDetails, tag, responseTriggerred, successMessage, failureMessage, login, petrolGps, petrolQRCode, petrolNfc, taglist, calendericon, clockicon } = this.props.userState;
         console.log('taglist',successMessage)
-        const { hasCameraPermission, scanned } = this.state;
-        if (hasCameraPermission === null) {
-            return <Text>Requesting for camera permission</Text>;
-        }
-        if (hasCameraPermission === false) {
-            return <Text>No access to camera</Text>;
-        }
+
         return (
             <View style={styles.container}>
             <Header
             leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer()}}
-            centerComponent={{ text: 'Check In/Out', style: { color: '#fff' } }}
+            centerComponent={{ text: 'Tag Defined', style: { color: '#fff' } }}
             rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('SettingScreen')}}
         />
                 <View style={{ height: 50, backgroundColor: '#f4f0f0d6', justifyContent: 'center', paddingLeft: 10, }}>
@@ -163,25 +155,27 @@ class TagDefined extends Component {
                 </View>
                 </ScrollView>
                 <Modal isVisible={this.state.isModalVisible}>
-                    <BarCodeScanner
-                        onBarCodeScanned={scanned ? undefined : this.handleBarCodeScanned}
-                        style={StyleSheet.absoluteFillObject}
-                    />
-                    <View style={{ justifyContent: 'flex-end' }}>
-                        {/* <Button
-            title="Close"
-            onPress={() => this.setState({isModalVisible:false})}
-          /> */}
-                    </View>
-                    {scanned}
+                <RNCamera
+                        ref={ref => {
+                            this.camera = ref;
+                        }}
+                        style={{
+                            flex: 1,
+                            width: '100%',
+                        }}
+                        onGoogleVisionBarcodesDetected={this.barcodeRecognized}
+                    >
+                    </RNCamera>
                 </Modal>
             </View>
         );
     }
-    handleBarCodeScanned = ({ type, data }) => {
-        this.setState({ scanned: true });
-        this.setState({ isModalVisible: !this.state.isModalVisible });
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    barcodeRecognized = ({ barcodes }) => {
+        barcodes.forEach(barcode => {
+            this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcode.data })
+            alert(`Bar code data ${barcode.data} has been scanned!`);
+        })
+
     };
 }
 

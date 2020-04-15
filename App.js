@@ -19,6 +19,8 @@ import SiteVisitScreen from './screens/SiteVisitScreen';
 import PatrollScreen from './screens/PatrollScreen';
 import IncidentScreen from './screens/IncidentScreen';
 import SettingScreen from './screens/SettingScreen';
+import History from './screens/History';
+import TagDefined from './screens/TagDefined';
 import store from './store/index';
 import { Provider } from 'react-redux';
 
@@ -35,6 +37,8 @@ const App = () => {
         <Drawer.Screen name="PatrollScreen" component={PatrollScreen} />
         <Drawer.Screen name="IncidentScreen" component={IncidentScreen} />
         <Drawer.Screen name="SettingScreen" component={SettingScreen} />
+        <Drawer.Screen name="HistoryScreen" component={History} />
+        <Drawer.Screen name="TagDefinedScreen" component={TagDefined} />
       </Drawer.Navigator>
     </NavigationContainer>
     </Provider>

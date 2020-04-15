@@ -28,10 +28,10 @@ class SettingScreen extends Component {
     listiten(i) {
         console.log('key', i.name)
         if (i.name === 'Scan Tags to be Defined') {
-            this.props.navigation.navigate("TagDefined")
+            this.props.navigation.navigate("TagDefinedScreen")
         }
         if (i.name === 'Days to keep History') {
-            this.props.navigation.navigate("History")
+            this.props.navigation.navigate("HistoryScreen")
         }
 
     }
@@ -86,7 +86,7 @@ class SettingScreen extends Component {
 
                         <Header
                             leftComponent={{ icon: 'menu', color: '#fff',onPress: () => this.props.navigation.openDrawer() }}
-                            centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+                            centerComponent={{ text: 'Setting', style: { color: '#fff' } }}
                             rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('Home') }}
                         />
                         <View style={{ padding: 10, justifyContent: 'center', alignItems: 'stretch', }}>

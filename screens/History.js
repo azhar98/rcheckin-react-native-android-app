@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { userLogin, userRegistration, updateState,userPatrol } from '../../actions/user';
+import { userLogin, userRegistration, updateState,userPatrol } from '../actions/user';
 
 import {
   Text,
@@ -15,12 +15,7 @@ import {
   ScrollView
 } from 'react-native';
 import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
-import Modal from 'react-native-modal';
-import * as Permissions from 'expo-permissions';
 
-import { BarCodeScanner } from 'expo-barcode-scanner';
-import * as Location from 'expo-location';
-const LOCATION_TASK_NAME = 'background-location-task';
 
 class History extends Component {
   constructor(props) {
