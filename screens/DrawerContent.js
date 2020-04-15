@@ -62,7 +62,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="CheckIn/Out"
-                            onPress={() => {props.navigation.navigate('CheckInOut')}}
+                            onPress={() => {props.navigation.navigate('CheckInOutScreen')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -73,7 +73,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Site Visit"
-                            onPress={() => {props.navigation.navigate('SiteVisit')}}
+                            onPress={() => {props.navigation.navigate('SiteVisitScreen')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -84,25 +84,23 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Patroll"
-                            onPress={() => {props.navigation.navigate('Patroll')}}
+                            onPress={() => {props.navigation.navigate('PatrollScreen')}}
+                        />
+                        <DrawerItem 
+                            icon={({color, size}) => (
+                                <Icon 
+                                name="ios-people" 
+                                color={color}
+                                size={size}
+                                />
+                            )}
+                            label="Incident"
+                            onPress={() => {props.navigation.navigate('IncidentScreen')}}
                         />
                     </Drawer.Section>
                     
                 </View>
             </DrawerContentScrollView>
-            <Drawer.Section style={styles.bottomDrawerSection}>
-                <DrawerItem 
-                    icon={({color, size}) => (
-                        <Icon 
-                        name="ios-log-out" 
-                        color={color}
-                        size={size}
-                        />
-                    )}
-                    label="Sign Out"
-                    onPress={() => {}}
-                />
-            </Drawer.Section>
             <Drawer.Section style={styles.bottomDrawerSection}>
                 <DrawerItem 
                     icon={({color, size}) => (

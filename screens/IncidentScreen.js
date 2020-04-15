@@ -61,7 +61,7 @@ class IncidentScreen extends Component {
       <View style={{ flex: 1, }}>
         <Header
           leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
-          centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Incident', style: { color: '#fff' } }}
           rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('Home') }}
         />
         <Input
@@ -75,7 +75,7 @@ class IncidentScreen extends Component {
           value={this.state.Content}
           onChangeText={(e) => this.onValueChangeIncident(e, 'Content')}
         />
-        <View style={{ flax: 1, flexDirection: 'row', justifyContent: 'flex-end', marginTop: 30, alignItems: 'flex-end' }}>
+        <View style={{ flax: 1, flexDirection: 'row', justifyContent: 'flex-end', marginTop: 30, alignItems: 'flex-end',marginRight:10 }}>
           <View>
             <Button
               title="Clear"

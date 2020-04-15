@@ -125,7 +125,16 @@ componentWillUnmount() {
   };
 
   render(){
-    const { userDetails, responseTriggerred, successMessage, failureMessage, login, coords } = this.props.userState;
+    const { userDetails, responseTriggerred, successMessage, failureMessage, login, coords,call911 } = this.props.userState;
+    let content;
+    if(call911){
+      content=
+      <Button
+          title="Call-911"
+          color="red"
+          onPress={() => this.call(911)}
+        />
+    }
     const HomeScreen = () => {
       return (
         
@@ -186,7 +195,11 @@ componentWillUnmount() {
             <Text style={{ fontWeight: 'bold' }}>Incident</Text>
           </View>
         </View>
+        <View style={{marginLeft:60,marginRight:60,borderRadius:60}}>
+      {content}
+      </View>
       </LinearGradient>
+      
       {/* <Dashboard items={items} background={true} card={this._card} column={2} /> */}
     </View>
       );
