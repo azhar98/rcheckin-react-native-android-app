@@ -21,13 +21,8 @@ import IncidentScreen from './screens/IncidentScreen';
 import SettingScreen from './screens/SettingScreen';
 import store from './store/index';
 import { Provider } from 'react-redux';
-import { createStackNavigator } from '@react-navigation/stack';
-const Drawer = createDrawerNavigator();
-const CheckInOut = createStackNavigator();
-const SiteVisit = createStackNavigator();
-const Patroll = createStackNavigator();
-const Incident = createStackNavigator();
 
+const Drawer = createDrawerNavigator();
 const App = () => {
   return (
     <Provider store={store}>
