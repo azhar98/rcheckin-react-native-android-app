@@ -23,6 +23,9 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
+	<key>NFCReaderUsageDescription</key>
+	<string>NFC NDEF Reading.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>

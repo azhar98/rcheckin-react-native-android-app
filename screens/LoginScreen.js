@@ -72,6 +72,7 @@ class LoginScreen extends Component {
     }
 
     SuccessAlert(){
+      debugger;
         if(this.props.userState.login==true){
             this.props.navigation.navigate("Home")
         }    

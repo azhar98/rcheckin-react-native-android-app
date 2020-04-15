@@ -6,6 +6,9 @@ class HomeScreen extends Component {
   constructor(props) {
     super(props);
 }
+componentDidMount(){
+  
+}
   render(){
     const HomeScreen = () => {
       return (

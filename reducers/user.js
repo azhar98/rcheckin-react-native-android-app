@@ -196,6 +196,7 @@ const handlers = {
   },
   [USER_TYPE.CHECKIN_USER_SUCCESS]: (state, action) => {
     console.log(action)
+    debugger
     const { list,history } = state;
     if (action.payload.success == true) {
       successMessage = 'CHECKINSuccess';

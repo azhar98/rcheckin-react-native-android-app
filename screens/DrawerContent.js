@@ -17,13 +17,10 @@ import {
 
 import Icon from 'react-native-vector-icons/Ionicons';
 
+
 export function DrawerContent(props) {
 
-    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
 
-    const toggleTheme = () => {
-        setIsDarkTheme(!isDarkTheme);
-    }
 
     return(
         <View style={{flex:1}}>
@@ -40,6 +37,17 @@ export function DrawerContent(props) {
                             <View style={{marginLeft:15, flexDirection:'column'}}>
                                 <Title style={styles.title}>Pradip Debnath</Title>
                                 <Caption style={styles.caption}>@itzpradip</Caption>
+                            </View>
+                        </View>
+
+                        <View style={styles.row}>
+                            <View style={styles.section}>
+                                <Paragraph style={[styles.paragraph, styles.caption]}>80</Paragraph>
+                                <Caption style={styles.caption}>Following</Caption>
+                            </View>
+                            <View style={styles.section}>
+                                <Paragraph style={[styles.paragraph, styles.caption]}>100</Paragraph>
+                                <Caption style={styles.caption}>Followers</Caption>
                             </View>
                         </View>
                     </View>
@@ -97,7 +105,7 @@ export function DrawerContent(props) {
                 <DrawerItem 
                     icon={({color, size}) => (
                         <Icon 
-                        name="exit-to-app" 
+                        name="ios-log-out" 
                         color={color}
                         size={size}
                         />
@@ -110,7 +118,7 @@ export function DrawerContent(props) {
                 <DrawerItem 
                     icon={({color, size}) => (
                         <Icon 
-                        name="exit-to-app" 
+                        name="ios-log-in" 
                         color={color}
                         size={size}
                         />
