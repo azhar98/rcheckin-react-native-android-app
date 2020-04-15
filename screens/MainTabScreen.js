@@ -39,7 +39,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="CheckIn/Out"
-        component={CheckInOutStackScreen}
+        component={CheckInOutScreen}
         options={{
           tabBarLabel: 'CheckIn/Out',
           tabBarColor: '#1f65ff',
@@ -50,7 +50,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="SiteVisit"
-        component={SiteVisitStackScreen}
+        component={SiteVisitScreen}
         options={{
           tabBarLabel: 'SiteVisit',
           tabBarColor: '#694fad',
@@ -61,7 +61,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="Patroll"
-        component={PatrollStackScreen}
+        component={PatrollScreen}
         options={{
           tabBarLabel: 'Patroll',
           tabBarColor: '#d02860',
@@ -72,7 +72,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="Incident"
-        component={IncidentStackScreen}
+        component={IncidentScreen}
         options={{
           tabBarLabel: 'Incident',
           tabBarColor: '#d02860',

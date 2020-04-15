@@ -16,32 +16,6 @@ import {
 navigator.geolocation = require('@react-native-community/geolocation')
 import LinearGradient from 'react-native-linear-gradient';
 import { createStackNavigator } from '@react-navigation/stack';
-const CheckInOut = createStackNavigator();
-const SiteVisit = createStackNavigator();
-const Patroll = createStackNavigator();
-const Incident = createStackNavigator();
-const CheckInOutStackScreen = ({navigation}) => (
-  <CheckInOut.Navigator screenOptions={{
-          headerStyle: {
-          backgroundColor: '#557afef7',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-          fontWeight: 'bold'
-          }
-      }}>
-          <CheckInOut.Screen name="CheckInOut" component={CheckInOutScreen} options={{
-          title:'Check In/Out',
-          headerTitleAlign:'center',
-          headerLeft: () => (
-              <Icon.Button name="ios-menu" size={25} backgroundColor="#557afef7" onPress={() => navigation.openDrawer()}></Icon.Button>
-          ),
-          headerRight: () => (
-              <Icon.Button name="ios-settings" size={25} backgroundColor="#557afef7" onPress={() => navigation.navigate('SettingScreen')}></Icon.Button>
-          )
-          }} />
-  </CheckInOut.Navigator>
-  );
 //import { LinearGradient } from 'expo-linear-gradient';
 
 //import { PERMISSIONS } from 'react-native-permissions';
@@ -135,17 +109,17 @@ componentWillUnmount() {
   _card(name) {
     console.log('Card: ' + name)
     if (name === "Check In/Out") {
-     // this.props.navigation.navigate("CheckInOut")
-      component={CheckInOutStackScreen}
+     this.props.navigation.navigate("CheckInOutScreen")
+      
     }
     if (name === "Site Visit") {
-      this.props.navigation.navigate("SiteVisit")
+      this.props.navigation.navigate("SiteVisitScreen")
     }
     if (name === "Patrol") {
-      this.props.navigation.navigate("Patroll")
+      this.props.navigation.navigate("PatrollScreen")
     }
     if (name === "Incident") {
-      this.props.navigation.navigate("Incident")
+      this.props.navigation.navigate("IncidentScreen")
     }
 
   };
