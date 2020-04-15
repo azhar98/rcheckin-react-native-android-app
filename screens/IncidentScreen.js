@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { userLogin, userRegistration, updateState,userIncident } from '../actions/user';
+import { userLogin, userRegistration, updateState, userIncident } from '../actions/user';
 
 import {
   Text,
@@ -18,7 +18,7 @@ import {
   Platform,
   Alert
 } from 'react-native';
-import { CheckBox, ListItem, Input } from 'react-native-elements';
+import { CheckBox, ListItem, Input, Header } from 'react-native-elements';
 import styles from '../StyleSheets/LoginStyle'
 
 class IncidentScreen extends Component {
@@ -34,56 +34,61 @@ class IncidentScreen extends Component {
     console.log('props', this.props.userState)
   }
 
-  buttonClear(){
-    this.setState({Subject:'',Content:''})
+  buttonClear() {
+    this.setState({ Subject: '', Content: '' })
   }
 
-  buttonSend(){
+  buttonSend() {
     this.props.userIncident(this.state);
   }
 
   onValueChangeIncident = (value, id) => {
-    if(id==='Subject'){
-      this.setState({Subject:value})
+    if (id === 'Subject') {
+      this.setState({ Subject: value })
     }
-    if(id==='Content'){
-      this.setState({Content:value})
+    if (id === 'Content') {
+      this.setState({ Content: value })
     }
-}
+  }
 
   render() {
     const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, accountButton, mainButton } = this.props.userState;
-    console.log('Incident',successMessage)
-    if(successMessage==='IncidentSuccess'){
+    console.log('Incident', successMessage)
+    if (successMessage === 'IncidentSuccess') {
       Alert.alert('Success')
     }
     return (
-      <View style={{flex: 1,alignItems: 'center',padding:40}}>
+      <View style={{ flex: 1, }}>
+        <Header
+          leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
+          centerComponent={{ text: 'Incident', style: { color: '#fff' } }}
+          rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('Home') }}
+        />
         <Input
           placeholder='Subject'
           value={this.state.Subject}
-          onChangeText={(e) => this.onValueChangeIncident(e, 'Subject')} 
+          onChangeText={(e) => this.onValueChangeIncident(e, 'Subject')}
         />
-        <View style={{height:20}}></View>
+        <View style={{ height: 20 }}></View>
         <Input
           placeholder='Content'
           value={this.state.Content}
-          onChangeText={(e) => this.onValueChangeIncident(e, 'Content')} 
+          onChangeText={(e) => this.onValueChangeIncident(e, 'Content')}
         />
-        <View style={{ flax:1, flexDirection: 'row',justifyContent:'flex-end',marginTop:30,alignItems:'flex-end' }}>
-        <View>
-          <Button
-            title="Clear"
-            onPress={() => this.buttonClear()}
-          />
+        <View style={{ flax: 1, flexDirection: 'row', justifyContent: 'flex-end', marginTop: 30, alignItems: 'flex-end',marginRight:10 }}>
+          <View>
+            <Button
+              title="Clear"
+              onPress={() => this.buttonClear()}
+            />
           </View>
-          <View style={{width:10}}>
+          <View style={{ width: 10 }}>
           </View>
           <View>
-          <Button
-            title="Send"
-            onPress={() => this.buttonSend()}
-          />
+            <Button
+              title="Send"
+              onPress={() => this.buttonSend()}
+            />
           </View>
         </View>
       </View>
@@ -101,7 +106,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators({ userLogin, userRegistration, updateState,userIncident }, dispatch)
+  ...bindActionCreators({ userLogin, userRegistration, updateState, userIncident }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(IncidentScreen);

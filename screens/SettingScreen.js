@@ -85,9 +85,9 @@ class SettingScreen extends Component {
                         </View> */}
 
                         <Header
-                            leftComponent={{ icon: 'menu', color: '#fff' }}
+                            leftComponent={{ icon: 'menu', color: '#fff',onPress: () => this.props.navigation.openDrawer() }}
                             centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-                            rightComponent={{ icon: 'home', color: '#fff' }}
+                            rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('Home') }}
                         />
                         <View style={{ padding: 10, justifyContent: 'center', alignItems: 'stretch', }}>
                             <View style={{ padding: 20, }}>
