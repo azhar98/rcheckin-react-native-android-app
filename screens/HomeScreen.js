@@ -109,16 +109,16 @@ componentWillUnmount() {
   _card(name) {
     console.log('Card: ' + name)
     if (name === "Check In/Out") {
-      this.props.navigation.navigate("CheckInOutScreen")
+      this.props.navigation.navigate("CheckInOut")
     }
     if (name === "Site Visit") {
-      this.props.navigation.navigate("SiteVisitScreen")
+      this.props.navigation.navigate("SiteVisit")
     }
     if (name === "Patrol") {
-      this.props.navigation.navigate("PatrollScreen")
+      this.props.navigation.navigate("Patroll")
     }
     if (name === "Incident") {
-      this.props.navigation.navigate("IncidentScreen")
+      this.props.navigation.navigate("Incident")
     }
 
   };

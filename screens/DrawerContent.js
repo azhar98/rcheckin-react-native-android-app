@@ -84,7 +84,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Site Visit"
-                            onPress={() => {props.navigation.navigate('SiteVisitScreen')}}
+                            onPress={() => {props.navigation.navigate('SiteVisit')}}
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
@@ -95,7 +95,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Patroll"
-                            onPress={() => {props.navigation.navigate('PatrollScreen')}}
+                            onPress={() => {props.navigation.navigate('Patroll')}}
                         />
                     </Drawer.Section>
                     

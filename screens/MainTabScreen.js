@@ -13,6 +13,9 @@ import IncidentScreen from './IncidentScreen'
 
 const HomeStack = createStackNavigator();
 const CheckInOut = createStackNavigator();
+const SiteVisit = createStackNavigator();
+const Patroll = createStackNavigator();
+const Incident = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -45,7 +48,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="SiteVisit"
-        component={SiteVisitScreen}
+        component={SiteVisitStackScreen}
         options={{
           tabBarLabel: 'SiteVisit',
           tabBarColor: '#694fad',
@@ -56,7 +59,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="Patroll"
-        component={PatrollScreen}
+        component={PatrollStackScreen}
         options={{
           tabBarLabel: 'Patroll',
           tabBarColor: '#d02860',
@@ -67,7 +70,7 @@ const MainTabScreen = () => (
       />
       <Tab.Screen
         name="Incident"
-        component={IncidentScreen}
+        component={IncidentStackScreen}
         options={{
           tabBarLabel: 'Incident',
           tabBarColor: '#d02860',
@@ -127,3 +130,71 @@ const CheckInOutStackScreen = ({navigation}) => (
   </CheckInOut.Navigator>
   );
 
+
+const SiteVisitStackScreen = ({navigation}) => (
+  <SiteVisit.Navigator screenOptions={{
+          headerStyle: {
+          backgroundColor: '#557afef7',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+          fontWeight: 'bold'
+          }
+      }}>
+          <SiteVisit.Screen name="SiteVisit" component={SiteVisitScreen} options={{
+          title:'Site Visit',
+          headerTitleAlign:'center',
+          headerLeft: () => (
+              <Icon.Button name="ios-menu" size={25} backgroundColor="#557afef7" onPress={() => navigation.openDrawer()}></Icon.Button>
+          ),
+          headerRight: () => (
+              <Icon.Button name="ios-settings" size={25} backgroundColor="#557afef7" onPress={() => navigation.navigate('SettingScreen')}></Icon.Button>
+          )
+          }} />
+  </SiteVisit.Navigator>
+  );
+
+  const PatrollStackScreen = ({navigation}) => (
+    <Patroll.Navigator screenOptions={{
+            headerStyle: {
+            backgroundColor: '#557afef7',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+            fontWeight: 'bold'
+            }
+        }}>
+            <Patroll.Screen name="Patroll" component={PatrollScreen} options={{
+            title:'Patroll',
+            headerTitleAlign:'center',
+            headerLeft: () => (
+                <Icon.Button name="ios-menu" size={25} backgroundColor="#557afef7" onPress={() => navigation.openDrawer()}></Icon.Button>
+            ),
+            headerRight: () => (
+                <Icon.Button name="ios-settings" size={25} backgroundColor="#557afef7" onPress={() => navigation.navigate('SettingScreen')}></Icon.Button>
+            )
+            }} />
+    </Patroll.Navigator>
+    );
+    const IncidentStackScreen = ({navigation}) => (
+      <Incident.Navigator screenOptions={{
+              headerStyle: {
+              backgroundColor: '#557afef7',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+              fontWeight: 'bold'
+              }
+          }}>
+              <Incident.Screen name="Incident" component={IncidentScreen} options={{
+              title:'Incident',
+              headerTitleAlign:'center',
+              headerLeft: () => (
+                  <Icon.Button name="ios-menu" size={25} backgroundColor="#557afef7" onPress={() => navigation.openDrawer()}></Icon.Button>
+              ),
+              headerRight: () => (
+                  <Icon.Button name="ios-settings" size={25} backgroundColor="#557afef7" onPress={() => navigation.navigate('SettingScreen')}></Icon.Button>
+              )
+              }} />
+      </Incident.Navigator>
+      );
