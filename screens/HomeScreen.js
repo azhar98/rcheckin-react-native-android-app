@@ -146,7 +146,7 @@ componentWillUnmount() {
         <LinearGradient colors={['#24c6dc', '#24c6dc', '#514a9d']} style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}>
           <Image
             style={{ width: 50, height: 50, borderRadius: 50, }}
-            source={require('../assets/profile.png')}
+            source={require('../assets/user.png')}
           />
           <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>{userDetails.usernameOrEmailAddress}</Text>
           <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}>Manager</Text>

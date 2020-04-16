@@ -48,6 +48,10 @@ class SettingScreen extends Component {
 
     }
 
+    logout(){
+        this.props.navigation.navigate('LoginScreen') 
+    }
+
     render() {
         const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, accountButton, mainButton, call911 } = this.props.userState;
         return (
@@ -87,7 +91,7 @@ class SettingScreen extends Component {
                         <Header
                             leftComponent={{ icon: 'menu', color: '#fff',onPress: () => this.props.navigation.openDrawer() }}
                             centerComponent={{ text: 'Setting', style: { color: '#fff' } }}
-                            rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('Home') }}
+                            rightComponent={{ icon: 'logout', color: '#fff',onPress: () => this.logout()}}
                         />
                         <View style={{ padding: 10, justifyContent: 'center', alignItems: 'stretch', }}>
                             <View style={{ padding: 20, }}>

@@ -75,7 +75,7 @@ const MainTabScreen = () => (
         component={IncidentScreen}
         options={{
           tabBarLabel: 'Incident',
-          tabBarColor: '#d02860',
+          tabBarColor: '#FF5733',
           tabBarIcon: ({ color }) => (
             <Icon name="ios-warning" color={color} size={26} />
           ),

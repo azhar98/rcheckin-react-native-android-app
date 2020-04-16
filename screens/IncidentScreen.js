@@ -62,7 +62,7 @@ class IncidentScreen extends Component {
         <Header
           leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
           centerComponent={{ text: 'Incident', style: { color: '#fff' } }}
-          rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('Home') }}
+          rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen') }}
         />
         <Input
           placeholder='Subject'

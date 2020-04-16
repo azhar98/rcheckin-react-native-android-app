@@ -16,7 +16,8 @@ import {
     ScrollView,
     Keyboard,
     Platform,
-    Alert
+    Alert,
+    BackHandler
 } from 'react-native';
 import styles from '../StyleSheets/LoginStyle';
 
@@ -26,8 +27,18 @@ class LoginScreen extends Component {
         super(props);
     }
 
-    componentDidMount(){
+    componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     }
+
+    componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    }
+
+    handleBackButton() {
+        return true;
+    }
+
 
     switchToRegistration(){
         Keyboard.dismiss()
@@ -72,9 +83,8 @@ class LoginScreen extends Component {
     }
 
     SuccessAlert(){
-      debugger;
         if(this.props.userState.login==true){
-            this.props.navigation.navigate("Home")
+            this.props.navigation.navigate("HomeDrawer")
         }    
     }
 

@@ -29,9 +29,9 @@ const App = () => {
   return (
     <Provider store={store}>
     <NavigationContainer>
-      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>        
+      <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}> 
+        <Drawer.Screen name="LoginScreen" component={LoginScreen} />       
         <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
-        <Drawer.Screen name="LoginScreen" component={LoginScreen} />
         <Drawer.Screen name="CheckInOutScreen" component={CheckInOutScreen} />
         <Drawer.Screen name="SiteVisitScreen" component={SiteVisitScreen} />
         <Drawer.Screen name="PatrollScreen" component={PatrollScreen} />
