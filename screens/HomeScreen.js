@@ -18,6 +18,13 @@ import {
 navigator.geolocation = require('@react-native-community/geolocation')
 import LinearGradient from 'react-native-linear-gradient';
 import { createStackNavigator } from '@react-navigation/stack';
+import BackgroundTask from 'react-native-background-task'
+ 
+BackgroundTask.define(() => {
+  console.log('Hello from a background task')
+  debugger
+  BackgroundTask.finish()
+})
 //import { LinearGradient } from 'expo-linear-gradient';
 
 //import { PERMISSIONS } from 'react-native-permissions';
@@ -35,11 +42,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 class HomeScreen extends Component {
   
 componentWillUnmount() {
- 
+
+  
   //this.eventSubscription.remove();
 }
 
   async componentDidMount() {
+    debugger
+    BackgroundTask.schedule()
     console.log('home',this.props.userState)
     // const { status } = await Location.requestPermissionsAsync();
     // console.log("Status",status)

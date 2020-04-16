@@ -4,6 +4,7 @@ import androidx.multidex.MultiDexApplication;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import community.revteltech.nfc.NfcManagerPackage;
 import com.jamesisaac.rnbackgroundtask.BackgroundTaskPackage;
 import community.revteltech.nfc.NfcManagerPackage;
 import community.revteltech.nfc.NfcManagerPackage;
