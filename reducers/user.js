@@ -90,7 +90,7 @@ const handlers = {
   [USER_TYPE.LOGIN_USER_SUCCESS]: (state, action) => {
     const { userDetails } = state;
     if (action.payload.success == true) {
-      debugger
+      
       successMessage = 'LoginSuccess';
       userDetails.ticket = action.payload.result.ticket;
       userDetails.userName = action.payload.result.userName;
@@ -172,7 +172,7 @@ const handlers = {
   },
   [USER_TYPE.CHECKIN_USER_SUCCESS]: (state, action) => {
     console.log(action)
-    debugger
+    
     const { list,history } = state;
     if (action.payload.success == true) {
       successMessage = 'CHECKINSuccess';
@@ -264,7 +264,7 @@ const handlers = {
   };
 },
 [USER_TYPE.UPLOADSCANNEDTAG_USER_SUCCESS]: (state, action) => {
-  debugger
+  
   console.log(action)
   const { taglist,history } = state;
   if (action.payload.success == true) {

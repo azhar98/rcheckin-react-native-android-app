@@ -43,7 +43,7 @@ export function userLoginFailure(error) {
 
 // ================ For Registation ====================
 export function userRegistration() {
-  debugger
+  
   return (dispatch, getState) => {
     const { userDetails } = getState().userState;
     fetch(`${URI.registration}`, {
@@ -83,7 +83,7 @@ export function userRegistrationFailure(error) {
 // ================ For CheckIn ====================
 export function userCheckIn(state) {
   console.log('state', state)
-  debugger
+  
   return (dispatch, getState) => {
     const { userDetails, coords } = getState().userState;
     fetch(`${URI.checkInOrOut}`, {
@@ -160,7 +160,7 @@ export function userCheckOutFailure(error) {
 // ================ For BeginVisit ====================
 export function userBeginVisit(state) {
   console.log('state', state)
-  debugger
+  
   return (dispatch, getState) => {
     const { userDetails, coords } = getState().userState;
     fetch(`${URI.visitSite}`, {
@@ -236,7 +236,7 @@ export function userEndVisitFailure(error) {
 
 // ================ For UploadScannedTag ====================
 export function userUploadScannedTag(state) {
-  debugger;
+  ;
   console.log('state', state)
   return (dispatch, getState) => {
     const { userDetails,tag, coords } = getState().userState;
@@ -277,7 +277,7 @@ export function userUploadScannedTagFailure(error) {
 // ================ For Patrol ====================
 export function userPatrol(state) {
   console.log('state', state)
-  debugger
+  
   return (dispatch, getState) => {
     const { userDetails, coords } = getState().userState;
     fetch(`${URI.patrol}`, {
@@ -318,7 +318,7 @@ export function userPatrolFailure(error) {
 // ================ For Incident ====================
 export function userIncident(state) {
   console.log('state', state)
-  debugger
+  
   return (dispatch, getState) => {
     const { userDetails, coords } = getState().userState;
     fetch(`${URI.incident}`, {

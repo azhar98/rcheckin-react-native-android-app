@@ -44,7 +44,7 @@ class CheckInOutScreen extends Component {
     }
     componentDidMount() {
         console.log('props', this.props.userState)
-        debugger
+        
         if (this.props.userState.coords.latitude !== null) {
             this.setState({ checkGps: true })
           }

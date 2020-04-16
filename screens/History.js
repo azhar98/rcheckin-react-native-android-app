@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   FlatList,
   ToastAndroid,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
 import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
 
@@ -36,7 +37,7 @@ class History extends Component {
     // const { status } = await Location.requestPermissionsAsync();
     // console.log("Status",status)
     // if (status === 'granted') {
-    //   debugger
+    //   
     //   await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
     //     accuracy: Location.Accuracy.Balanced,
     //   });

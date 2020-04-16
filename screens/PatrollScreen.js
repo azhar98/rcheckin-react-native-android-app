@@ -12,7 +12,8 @@ import {
   TouchableOpacity,
   FlatList,
   ToastAndroid,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
 import { CheckBox, Button, ListItem ,Header} from 'react-native-elements';
 import Modal from 'react-native-modal';

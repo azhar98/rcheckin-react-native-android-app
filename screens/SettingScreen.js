@@ -14,7 +14,8 @@ import {
     ToastAndroid,
     ImageBackground,
     Switch,
-    ScrollView
+    ScrollView,
+    Alert
 } from 'react-native';
 import { CheckBox, Button, ListItem, Header } from 'react-native-elements';
 import styles from '../StyleSheets/LoginStyle';

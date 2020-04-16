@@ -83,6 +83,8 @@ target 'RCheck' do
 
 
 
+  pod 'react-native-nfc-manager', :path => '../node_modules/react-native-nfc-manager'
+
   target 'RCheckTests' do
     inherit! :complete
     # Pods for testing

@@ -12,7 +12,8 @@ import {
     TouchableOpacity,
     FlatList,
     ToastAndroid,
-    ScrollView
+    ScrollView,
+    Alert
 } from 'react-native';
 import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
 import Modal from 'react-native-modal';
@@ -92,7 +93,7 @@ class SiteVisitScreen extends Component {
 
     button(name) {
         console.log('hi')
-        //debugger
+        //
         if (name == "Begin Visit") {
 
             this.props.userBeginVisit(this.state);

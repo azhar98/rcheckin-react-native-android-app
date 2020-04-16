@@ -12,7 +12,8 @@ import {
   Button,
   TouchableOpacity,
   Image,
-  Linking
+  Linking,
+  Alert
 } from 'react-native';
 navigator.geolocation = require('@react-native-community/geolocation')
 import LinearGradient from 'react-native-linear-gradient';
@@ -65,7 +66,7 @@ componentWillUnmount() {
 //           tagValue:null
 //         })
 //       }).then(response => response.json())
-//         .then((data) =>{debugger
+//         .then((data) =>{
 // console.log("data",data);
 //         })
 //         .catch(error => dispatch(userCheckInFailure(error)));
