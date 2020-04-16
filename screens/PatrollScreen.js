@@ -15,9 +15,10 @@ import {
   ScrollView,
   Alert
 } from 'react-native';
-import { CheckBox, Button, ListItem ,Header} from 'react-native-elements';
+import { CheckBox, Button, ListItem, Header } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { RNCamera } from 'react-native-camera';
+import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 navigator.geolocation = require('@react-native-community/geolocation');
 
 class PatrollScreen extends Component {
@@ -44,7 +45,17 @@ class PatrollScreen extends Component {
     else {
       this.getLocation();
     }
+    NfcManager.start();
   }
+
+  componentWillUnmount() {
+    this._cleanUp();
+  }
+
+  _cleanUp = () => {
+    NfcManager.cancelTechnologyRequest().catch(() => 0);
+  }
+
   getLocation() {
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -86,7 +97,8 @@ class PatrollScreen extends Component {
       if (this.state.petrolNfc) {
         this.setState({ petrolNfc: false })
       } else {
-        this.setState({ petrolNfc: true, tagType: 2, petrolQRCode: false })
+        this.readData();
+
       }
 
     }
@@ -97,16 +109,65 @@ class PatrollScreen extends Component {
     this.props.userPatrol(this.state);
   }
 
+  readData = async () => {
+    try {
+      let tech = Platform.OS === 'ios' ? NfcTech.MifareIOS : NfcTech.NfcA;
+      let resp = await NfcManager.requestTechnology(tech, {
+        alertMessage: 'Ready to do some custom Mifare cmd!'
+      });
+
+      let cmd = Platform.OS === 'ios' ? NfcManager.sendMifareCommandIOS : NfcManager.transceive;
+
+      resp = await cmd([0x3A, 4, 4]);
+      let payloadLength = parseInt(resp.toString().split(",")[1]);
+      let payloadPages = Math.ceil(payloadLength / 4);
+      let startPage = 5;
+      let endPage = startPage + payloadPages - 1;
+
+      resp = await cmd([0x3A, startPage, endPage]);
+      bytes = resp.toString().split(",");
+      let text = "";
+
+      for (let i = 0; i < bytes.length; i++) {
+        if (i < 5) {
+          continue;
+        }
+
+        if (parseInt(bytes[i]) === 254) {
+          break;
+        }
+
+        text = text + String.fromCharCode(parseInt(bytes[i]));
+
+      }
+      alert(text)
+      this.setState({
+        data: text,
+        petrolNfc: true,
+        tagType: 2,
+        petrolQRCode: false
+      })
+
+      this._cleanUp();
+    } catch (ex) {
+      ex.toString()
+      this.setState({
+        data: ex.toString()
+      })
+      this._cleanUp();
+    }
+  }
+
 
   render() {
     const { userDetails, responseTriggerred, successMessage, failureMessage, login, petrolGps, petrolQRCode, petrolNfc, patrollist, calendericon, clockicon } = this.props.userState;
     console.log('Patrol', successMessage)
     return (
       <View style={styles.container}>
-      <Header
-            leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer()}}
-            centerComponent={{ text: 'Patroll', style: { color: '#fff' } }}
-            rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('SettingScreen')}}
+        <Header
+          leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
+          centerComponent={{ text: 'Patroll', style: { color: '#fff' } }}
+          rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen') }}
         />
         <View style={{ height: 50, backgroundColor: '#f4f0f0d6', justifyContent: 'center', paddingLeft: 10, }}>
           <Text style={{ fontWeight: 'bold' }}>Track With</Text>

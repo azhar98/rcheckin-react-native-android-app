@@ -18,7 +18,9 @@ import {
 import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { RNCamera } from 'react-native-camera';
+import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 navigator.geolocation = require('@react-native-community/geolocation');
+
 
 
 
@@ -51,7 +53,17 @@ class CheckInOutScreen extends Component {
           else{
             this.getLocation();
           }
+
+          NfcManager.start();
         
+    }
+
+    componentWillUnmount() {
+        this._cleanUp();
+    }
+
+    _cleanUp = () => {
+        NfcManager.cancelTechnologyRequest().catch(() => 0);
     }
 
     getLocation() {
@@ -94,22 +106,69 @@ class CheckInOutScreen extends Component {
             }
 
         } else if (title == 'NFC') {
-            if (this.state.checkNfc) {
+            if (this.state.checkNfc) {    
                 this.setState({ checkNfc: false, });
             } else {
-                this.setState({ checkNfc: true });
+                this.readData();
             }
 
         }
     }
 
     button(name) {
-        console.log('hi', name);
         if (name == "Check In") {
             this.props.userCheckIn(this.state);
         }
         if (name == "Check Out") {
             this.props.userCheckOut(this.state);
+        }
+    }
+
+    readData = async () => {
+        try {
+            let tech = Platform.OS === 'ios' ? NfcTech.MifareIOS : NfcTech.NfcA;
+            let resp = await NfcManager.requestTechnology(tech, {
+                alertMessage: 'Ready to do some custom Mifare cmd!'
+            });
+
+            let cmd = Platform.OS === 'ios' ? NfcManager.sendMifareCommandIOS : NfcManager.transceive;
+
+            resp = await cmd([0x3A, 4, 4]);
+            let payloadLength = parseInt(resp.toString().split(",")[1]);
+            let payloadPages = Math.ceil(payloadLength / 4);
+            let startPage = 5;
+            let endPage = startPage + payloadPages - 1;
+
+            resp = await cmd([0x3A, startPage, endPage]);
+            bytes = resp.toString().split(",");
+            let text = "";
+
+            for(let i=0; i<bytes.length; i++){
+                if (i < 5){
+                    continue;
+                }
+
+                if (parseInt(bytes[i]) === 254){
+                    break;
+                }
+
+                text = text + String.fromCharCode(parseInt(bytes[i]));
+
+            }
+            alert(text)
+            this.setState({
+                data: text,
+                checkNfc: true,
+                tagType: 2
+            })
+
+            this._cleanUp();
+        } catch (ex) {
+            alert(ex.toString())
+            this.setState({
+                data: ex.toString()
+            })
+            this._cleanUp();
         }
     }
 
