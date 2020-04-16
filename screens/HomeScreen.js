@@ -40,11 +40,6 @@ componentWillUnmount() {
 
   async componentDidMount() {
     console.log('home',this.props.userState)
-    if(this.props.userState.userDetails.token==null){
-      this.props.navigation.navigate("LoginScreen")
-    }
-
-
     // const { status } = await Location.requestPermissionsAsync();
     // console.log("Status",status)
     // if (status === 'granted') {
@@ -148,7 +143,7 @@ componentWillUnmount() {
             style={{ width: 50, height: 50, borderRadius: 50, }}
             source={require('../assets/user.png')}
           />
-          <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>{userDetails.usernameOrEmailAddress}</Text>
+          <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>{userDetails.userName}</Text>
           <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}>Manager</Text>
         </LinearGradient>
       </View>

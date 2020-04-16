@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { userLogin,userRegistration,updateState} from '../actions/user';
+import { userLogin, userRegistration, updateState } from '../actions/user';
 
 import {
     Text,
@@ -20,6 +20,7 @@ import {
     BackHandler
 } from 'react-native';
 import styles from '../StyleSheets/LoginStyle';
+import { URI } from '../constants';
 
 
 class LoginScreen extends Component {
@@ -40,14 +41,14 @@ class LoginScreen extends Component {
     }
 
 
-    switchToRegistration(){
+    switchToRegistration() {
         Keyboard.dismiss()
-        this.props.updateState({ login:false });
+        this.props.updateState({ login: false });
     }
 
-    switchToLogin(){
+    switchToLogin() {
         Keyboard.dismiss()
-        this.props.updateState({ login:true });
+        this.props.updateState({ login: true });
     }
 
     onValueChangeLogin = (value, id) => {
@@ -55,41 +56,88 @@ class LoginScreen extends Component {
         userDetails[id] = value;
         this.props.updateState({ userDetails });
     }
+
+
     onValueChangeRegistration = (value, id) => {
         const { userDetails } = this.props.userState;
         userDetails[id] = value;
         this.props.updateState({ userDetails });
-        console.log('details',userDetails)
+        console.log('details', userDetails)
     }
 
-    onClickListener(viewId){
-        console.log("ViewID",viewId)
-        if(viewId=="login"){
-            this.props.userLogin();
-        }else if(viewId=="registration"){
-            this.props.userRegistration();            
+    onClickListener(viewId) {
+        console.log("ViewID", viewId)
+        if (viewId == "login") {
+            this.login()
+            //this.props.userLogin();
+        } else if (viewId == "registration") {
+            this.registration();
         }
-        
     }
 
-    SuccessAlert(){
-        this.props.navigation.navigate("HomeDrawer")
+    login() {
+        const { userDetails } = this.props.userState;
+        fetch(`${URI.login}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                usernameOrEmailAddress: userDetails.usernameOrEmailAddress,
+                password: userDetails.password
+            }),
+        }).then(response => response.json())
+            .then((data) => {
+                console.log('data',data)
+                if(data.success==true){
+                    this.props.updateState({ userDetails: data.result });
+                    this.props.navigation.navigate("HomeDrawer")
+                }else{
+                    alert("Wrong Username or Password")
+                }
+                
+            })
+            .catch((error) => { alert(error) });
     }
 
-    FailedAlert(){
-        alert("Wrong username or password");
+
+    registration() {
+        const { userDetails } = this.props.userState;
+        fetch(`${URI.registration}`, {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json', 
+            'Accept': 'application/json' },
+            body: JSON.stringify({
+                tenancyName: userDetails.tenancyName,
+                phoneNo: userDetails.phoneNo,
+                userName: userDetails.userName,
+                password: userDetails.password
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('data',data);
+                if(data.success==true){
+                    alert("Registration Successfull")
+                }else{
+                    alert("Registration Failure")
+                }
+                })
+            .catch(error => {alert(error)});
+
     }
 
-    FailedRegistrationAlert(){
+
+    FailedRegistrationAlert() {
         alert("Registration Failure");
     }
 
-    SuccessRegistrationAlert(){
+    SuccessRegistrationAlert() {
         alert("Registration Success");
     }
 
     render() {
-        const { userDetails,responseTriggerred,successMessage, failureMessage,login } = this.props.userState;
+        const { userDetails, responseTriggerred, successMessage, failureMessage, login } = this.props.userState;
         let content;
         if (login) {
             content =
@@ -109,7 +157,7 @@ class LoginScreen extends Component {
                             onChangeText={(e) => this.onValueChangeLogin(e, 'password')} />
                     </View>
                     <TouchableHighlight onPress={() => this.switchToRegistration()}>
-                    <Text style={styles.underlineText}>Registration</Text>
+                        <Text style={styles.underlineText}>Registration</Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
                         <Text style={styles.loginText}>Login</Text>
@@ -117,36 +165,36 @@ class LoginScreen extends Component {
                 </View>
         } else {
             content =
-                <View style={[styles.viewContainer,{paddingTop:50}]}>
+                <View style={[styles.viewContainer, { paddingTop: 50 }]}>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="TENANCY NAME"
                             underlineColorAndroid='transparent'
                             value={userDetails.tenancyName}
-                            onChangeText={(e) => this.onValueChangeRegistration(e, 'tenancyName')}/>
+                            onChangeText={(e) => this.onValueChangeRegistration(e, 'tenancyName')} />
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="TELEPHONE"
                             value={userDetails.telephone}
-                            onChangeText={(e) => this.onValueChangeRegistration(e, 'telephone')}/>
+                            onChangeText={(e) => this.onValueChangeRegistration(e, 'telephone')} />
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="USERNAME"
                             underlineColorAndroid='transparent'
                             value={userDetails.userName}
-                            onChangeText={(e) => this.onValueChangeRegistration(e, 'userName')}/>
+                            onChangeText={(e) => this.onValueChangeRegistration(e, 'userName')} />
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="PASSWORD"
                             underlineColorAndroid='transparent'
                             value={userDetails.password}
-                            onChangeText={(e) => this.onValueChangeRegistration(e, 'password')}/>
+                            onChangeText={(e) => this.onValueChangeRegistration(e, 'password')} />
                     </View>
                     <TouchableHighlight onPress={() => this.switchToLogin()}>
-                    <Text style={styles.underlineText}>Login</Text>
+                        <Text style={styles.underlineText}>Login</Text>
                     </TouchableHighlight>
                     <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('registration')}>
                         <Text style={styles.loginText}>Registration</Text>
@@ -155,33 +203,32 @@ class LoginScreen extends Component {
         }
 
         if (responseTriggerred) {
-            debugger
-            console.log('ud',userDetails)
+            console.log('ud', userDetails)
             const message = userDetails.ticket ? successMessage : failureMessage;
-            if (message==="Failure"){
+            if (message === "Failure") {
                 this.FailedAlert()
-                this.props.updateState({failureMessage:"" });
-            }else if(message==="LoginSuccess"){
+                this.props.updateState({ failureMessage: "" });
+            } else if (message === "LoginSuccess") {
                 this.SuccessAlert()
-                this.props.updateState({successMessage:"" });
-            }else if(message==="RegistrationSuccess"){  
+                this.props.updateState({ successMessage: "" });
+            } else if (message === "RegistrationSuccess") {
                 this.SuccessRegistrationAlert()
-                this.props.updateState({successMessage:"" });
+                this.props.updateState({ successMessage: "" });
 
-            }else if(message==="RegistrationFailure"){  
+            } else if (message === "RegistrationFailure") {
                 this.FailedRegistrationAlert()
-                this.props.updateState({failureMessage:"" });
-            }         
+                this.props.updateState({ failureMessage: "" });
+            }
         }
 
         return (
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/images/login.png')} style={styles.backgroundImage}>
-                    <KeyboardAvoidingView style={{flex:1}}
-                    behavior= {(Platform.OS === 'ios')? "padding" : "paddingTop:20"}
-                    keyboardVerticalOffset={Platform.select({ios: 0, android: 500})}
-                    enabled>
-                    {content}
+                    <KeyboardAvoidingView style={{ flex: 1 }}
+                        behavior={(Platform.OS === 'ios') ? "padding" : "paddingTop:20"}
+                        keyboardVerticalOffset={Platform.select({ ios: 0, android: 500 })}
+                        enabled>
+                        {content}
                     </KeyboardAvoidingView>
                 </ImageBackground>
             </View>
@@ -198,7 +245,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    ...bindActionCreators({ userLogin,userRegistration,updateState}, dispatch)
+    ...bindActionCreators({ userLogin, userRegistration, updateState }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

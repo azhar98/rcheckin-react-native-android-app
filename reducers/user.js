@@ -3,26 +3,7 @@ import { USER_TYPE } from '../constants/actionReducerConstants';
 //import { setAsyncStorage, resetUserDetails } from '../Utils';
 
 const initialState = {
-  userDetails: {
-    company_url: '',
-    telephone: '',
-    usernameOrEmailAddress: '',
-    password: '',
-    login: true,
-    ticket: '',
-    tenancyName: '',
-    userName: '',
-    firstName: '',
-    lastName: '',
-    employeeId: '',
-    tagReadingSettings: '',
-    features: '',
-    mobilGpsCfg: '',
-    Subject: '',
-    Content: '',
-    tagType: 0,
-    tagValue: ''
-  },
+  userDetails: [],
   coords: {
     altitude: null,
     heading: null,
