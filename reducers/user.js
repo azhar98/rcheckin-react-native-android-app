@@ -108,8 +108,8 @@ const handlers = {
   },
   [USER_TYPE.LOGIN_USER_SUCCESS]: (state, action) => {
     const { userDetails } = state;
-    debugger
-    if (action.payload.success) {
+    if (action.payload.success == true) {
+      debugger
       successMessage = 'LoginSuccess';
       userDetails.ticket = action.payload.result.ticket;
       userDetails.userName = action.payload.result.userName;
@@ -120,7 +120,6 @@ const handlers = {
       userDetails.features = action.payload.result.features;
       userDetails.mobilGpsCfg = action.payload.result.mobilGpsCfg;
       return {
-
         successMessage,
         responseTriggerred: true,
       };
@@ -128,7 +127,6 @@ const handlers = {
     } else {
       failureMessage = "Failure";
       return {
-
         failureMessage,
         responseTriggerred: true,
       };
@@ -138,10 +136,9 @@ const handlers = {
 
   [USER_TYPE.LOGIN_USER_FAILUTE]: (_, action) => {
     return {
+      failureMessage,
       userDetails: null,
-      loading: false,
-      loggedIn: false,
-      responseTriggerred: false,
+      responseTriggerred: true,
     };
   },
 
@@ -151,7 +148,6 @@ const handlers = {
       successMessage: '',
       failureMessage: '',
       responseTriggerred: false,
-      login: true,
     };
   },
   [USER_TYPE.REGISTER_USER_SUCCESS]: (state, action) => {
@@ -166,9 +162,9 @@ const handlers = {
         responseTriggerred: true,
       };
     } else {
-      failureMessage = "Failure";
+      failureMessage = "RegistrationFailure";
       return {
-        failureMessage: "",
+        failureMessage,
         responseTriggerred: true,
       };
     }
@@ -178,7 +174,6 @@ const handlers = {
   [USER_TYPE.REGISTER_USER_FAILURE]: (_, action) => {
     // console.log(action.payload)
     return {
-      successMessage: "",
       failureMessage,
       responseTriggerred: true,
     };

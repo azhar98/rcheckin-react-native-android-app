@@ -67,30 +67,29 @@ class LoginScreen extends Component {
         if(viewId=="login"){
             this.props.userLogin();
         }else if(viewId=="registration"){
-            this.props.userRegistration();
-            Alert.alert(
-                'Registration failed',
-                'Wrong details',
-                [
-                  {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                  {text: 'OK', onPress: () => console.log('OK Pressed')},
-                ],
-                { cancelable: false }
-              )
-            
+            this.props.userRegistration();            
         }
         
     }
 
     SuccessAlert(){
-        if(this.props.userState.login==true){
-            this.props.navigation.navigate("HomeDrawer")
-        }    
+        this.props.navigation.navigate("HomeDrawer")
+    }
+
+    FailedAlert(){
+        alert("Wrong username or password");
+    }
+
+    FailedRegistrationAlert(){
+        alert("Registration Failure");
+    }
+
+    SuccessRegistrationAlert(){
+        alert("Registration Success");
     }
 
     render() {
         const { userDetails,responseTriggerred,successMessage, failureMessage,login } = this.props.userState;
-        console.log('ffff',failureMessage)
         let content;
         if (login) {
             content =
@@ -156,31 +155,23 @@ class LoginScreen extends Component {
         }
 
         if (responseTriggerred) {
+            debugger
             console.log('ud',userDetails)
             const message = userDetails.ticket ? successMessage : failureMessage;
             if (message==="Failure"){
-                Alert.alert(
-                    'Login '+message,
-                    'Wrong username or password',
-                    [
-                      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: false }
-                  )
-                  this.props.updateState({failureMessage:"",});
+                this.FailedAlert()
+                this.props.updateState({failureMessage:"" });
             }else if(message==="LoginSuccess"){
                 this.SuccessAlert()
+                this.props.updateState({successMessage:"" });
             }else if(message==="RegistrationSuccess"){  
-                Alert.alert(
-                    'Registration Success',
-                    [
-                      {text: 'OK', onPress: () => console.log('OK Pressed')},
-                    ],
-                    { cancelable: false }
-                  )
-                  this.props.updateState({successMessage:"" });
-            }        
+                this.SuccessRegistrationAlert()
+                this.props.updateState({successMessage:"" });
+
+            }else if(message==="RegistrationFailure"){  
+                this.FailedRegistrationAlert()
+                this.props.updateState({failureMessage:"" });
+            }         
         }
 
         return (
