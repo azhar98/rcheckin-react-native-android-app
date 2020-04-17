@@ -54,12 +54,12 @@ class CheckInOutScreen extends Component {
             this.getLocation();
           }
 
-          NfcManager.start();
+          //NfcManager.start();
         
     }
 
     componentWillUnmount() {
-        this._cleanUp();
+        //this._cleanUp();
     }
 
     _cleanUp = () => {
@@ -109,6 +109,7 @@ class CheckInOutScreen extends Component {
             if (this.state.checkNfc) {    
                 this.setState({ checkNfc: false, });
             } else {
+                NfcManager.start();
                 this.readData();
             }
 
