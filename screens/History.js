@@ -57,7 +57,7 @@ class History extends Component {
       <View style={styles.container}>
       <Header
             leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer()}}
-            centerComponent={{ text: 'Check In/Out', style: { color: '#fff' } }}
+            centerComponent={{ text: 'History', style: { color: '#fff' } }}
             rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('SettingScreen')}}
         />
         <ScrollView>

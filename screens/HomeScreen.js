@@ -121,13 +121,6 @@ debugger
     //this.setState({ error: err.message });
   }
 
-  call(number) {
-    let phoneNumber = '';
-    if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
-    else { phoneNumber = `telprompt:${number}`; }
-    Linking.openURL(phoneNumber);
-  }
-
   _card(name) {
     console.log('Card: ' + name)
     if (name === "Check In/Out") {
@@ -148,15 +141,7 @@ debugger
 
   render() {
     const { userDetails, responseTriggerred, successMessage, failureMessage, login, coords, call911 } = this.props.userState;
-    let content;
-    if (call911) {
-      content =
-        <Button
-          title="Call-911"
-          color="red"
-          onPress={() => this.call(911)}
-        />
-    }
+    
     const HomeScreen = () => {
       return (
 
@@ -216,9 +201,6 @@ debugger
                 </TouchableOpacity>
                 <Text style={{ fontWeight: 'bold' }}>Incident</Text>
               </View>
-            </View>
-            <View style={{ marginLeft: 60, marginRight: 60, borderRadius: 60 }}>
-              {content}
             </View>
           </LinearGradient>
 
