@@ -17,26 +17,8 @@ import {
 } from 'react-native';
 navigator.geolocation = require('@react-native-community/geolocation')
 import LinearGradient from 'react-native-linear-gradient';
-import { createStackNavigator } from '@react-navigation/stack';
-//import BackgroundTask from 'react-native-background-task'
 import BackgroundFetch from "react-native-background-fetch";
-
-// BackgroundTask.define(() => {
-//   console.log('Hello from a background task')
-//   debugger
-//   BackgroundTask.finish()
-// })
-//import { LinearGradient } from 'expo-linear-gradient';
-
-//import { PERMISSIONS } from 'react-native-permissions';
-//import * as Permissions from 'expo-permissions';
-
-// import * as TaskManager from 'expo-task-manager';
-// import * as Location from 'expo-location';
-// const LOCATION_TASK_NAME = 'background-location-task';
-// import { EventEmitter } from 'fbemitter';
 import { URI } from '../constants';
-//const eventEmitter = new EventEmitter();
 
 
 
@@ -44,9 +26,7 @@ class HomeScreen extends Component {
 
   componentWillUnmount() {
 
-
-    //this.eventSubscription.remove();
-  }
+ }
 
   async componentDidMount() {
     // Configure it.
@@ -106,39 +86,9 @@ class HomeScreen extends Component {
           break;
       }
     });
-    // alert(BackgroundTask.UNAVAILABLE_DENIED)
-    // BackgroundTask.schedule()
+
     console.log('home', this.props.userState)
-    // const { status } = await Location.requestPermissionsAsync();
-    // console.log("Status",status)
-    // if (status === 'granted') {
-    //   await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME, {
-    //     accuracy: Location.Accuracy.Balanced,
-    //   });
-    // }
 
-    //     this.eventSubscription = eventEmitter.addListener("locationChanged", locationData => {
-
-
-    //       fetch(`${URI.checkInOrOut}`, {
-    //         method: 'post',
-    //         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+this.props.userState.userDetails.ticket},
-    //         body: JSON.stringify({
-    //           appType: 1,
-    //           eventType: 10,
-    //           trackTime: new Date().toISOString(),
-    //           latitude: locationData.locations[0].coords.latitude,
-    //           longitude: locationData.locations[0].coords.longitude,
-    //           employeeId: this.props.userState.userDetails.employeeId,
-    //           tagType:null,
-    //           tagValue:null
-    //         })
-    //       }).then(response => response.json())
-    //         .then((data) =>{
-    // console.log("data",data);
-    //         })
-    //         .catch(error => dispatch(userCheckInFailure(error)));
-    //     });
 
     let geoOptions = {
       enableHighAccuracy: true,
