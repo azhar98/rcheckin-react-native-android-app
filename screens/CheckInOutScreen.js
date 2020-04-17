@@ -66,7 +66,7 @@ class CheckInOutScreen extends Component {
     }
 
     handleBackButton() {
-        alert('Test')
+        return true;
     }
 
     _cleanUp = () => {
