@@ -18,13 +18,14 @@ import {
 navigator.geolocation = require('@react-native-community/geolocation')
 import LinearGradient from 'react-native-linear-gradient';
 import { createStackNavigator } from '@react-navigation/stack';
-import BackgroundTask from 'react-native-background-task'
- 
-BackgroundTask.define(() => {
-  console.log('Hello from a background task')
-  debugger
-  BackgroundTask.finish()
-})
+//import BackgroundTask from 'react-native-background-task'
+import BackgroundFetch from "react-native-background-fetch";
+
+// BackgroundTask.define(() => {
+//   console.log('Hello from a background task')
+//   debugger
+//   BackgroundTask.finish()
+// })
 //import { LinearGradient } from 'expo-linear-gradient';
 
 //import { PERMISSIONS } from 'react-native-permissions';
@@ -34,23 +35,80 @@ BackgroundTask.define(() => {
 // import * as Location from 'expo-location';
 // const LOCATION_TASK_NAME = 'background-location-task';
 // import { EventEmitter } from 'fbemitter';
-// import { URI } from '../../constants';
+import { URI } from '../constants';
 //const eventEmitter = new EventEmitter();
 
 
 
 class HomeScreen extends Component {
-  
-componentWillUnmount() {
 
-  
-  //this.eventSubscription.remove();
-}
+  componentWillUnmount() {
+
+
+    //this.eventSubscription.remove();
+  }
 
   async componentDidMount() {
-    debugger
-    BackgroundTask.schedule()
-    console.log('home',this.props.userState)
+    // Configure it.
+    BackgroundFetch.configure({
+      minimumFetchInterval: 15,     // <-- minutes (15 is minimum allowed)
+      // Android options
+      forceAlarmManager: false,     // <-- Set true to bypass JobScheduler.
+      stopOnTerminate: false,
+      startOnBoot: true,
+      requiredNetworkType: BackgroundFetch.NETWORK_TYPE_NONE, // Default
+      requiresCharging: false,      // Default
+      requiresDeviceIdle: false,    // Default
+      requiresBatteryNotLow: false, // Default
+      requiresStorageNotLow: false  // Default
+    }, async (taskId) => {
+      console.log("[js] Received background-fetch event: ", taskId);
+      fetch(`${URI.checkInOrOut}`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.props.userState.userDetails.ticket },
+        body: JSON.stringify({
+          appType: 1,
+          eventType: 10,
+          trackTime: new Date().toISOString(),
+          latitude: this.props.userState.coords.latitude,
+          longitude: this.props.userState.coords.longitude,
+          employeeId: this.props.userState.userDetails.employeeId,
+          tagType: null,
+          tagValue: null
+        })
+      }).then(response => response.json())
+        .then((data) => {
+          console.log("data", data);
+        })
+        .catch(error => dispatch(userCheckInFailure(error)));
+      console.log('Background', this.props.userState)
+      // Required: Signal completion of your task to native code
+      // If you fail to do this, the OS can terminate your app
+      // or assign battery-blame for consuming too much background-time
+
+
+      BackgroundFetch.finish(taskId);
+    }, (error) => {
+      console.log("[js] RNBackgroundFetch failed to start");
+    });
+
+    // Optional: Query the authorization status.
+    BackgroundFetch.status((status) => {
+      switch (status) {
+        case BackgroundFetch.STATUS_RESTRICTED:
+          console.log("BackgroundFetch restricted");
+          break;
+        case BackgroundFetch.STATUS_DENIED:
+          console.log("BackgroundFetch denied");
+          break;
+        case BackgroundFetch.STATUS_AVAILABLE:
+          console.log("BackgroundFetch is enabled");
+          break;
+      }
+    });
+    // alert(BackgroundTask.UNAVAILABLE_DENIED)
+    // BackgroundTask.schedule()
+    console.log('home', this.props.userState)
     // const { status } = await Location.requestPermissionsAsync();
     // console.log("Status",status)
     // if (status === 'granted') {
@@ -59,28 +117,28 @@ componentWillUnmount() {
     //   });
     // }
 
-//     this.eventSubscription = eventEmitter.addListener("locationChanged", locationData => {
-      
-      
-//       fetch(`${URI.checkInOrOut}`, {
-//         method: 'post',
-//         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+this.props.userState.userDetails.ticket},
-//         body: JSON.stringify({
-//           appType: 1,
-//           eventType: 10,
-//           trackTime: new Date().toISOString(),
-//           latitude: locationData.locations[0].coords.latitude,
-//           longitude: locationData.locations[0].coords.longitude,
-//           employeeId: this.props.userState.userDetails.employeeId,
-//           tagType:null,
-//           tagValue:null
-//         })
-//       }).then(response => response.json())
-//         .then((data) =>{
-// console.log("data",data);
-//         })
-//         .catch(error => dispatch(userCheckInFailure(error)));
-//     });
+    //     this.eventSubscription = eventEmitter.addListener("locationChanged", locationData => {
+
+
+    //       fetch(`${URI.checkInOrOut}`, {
+    //         method: 'post',
+    //         headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+this.props.userState.userDetails.ticket},
+    //         body: JSON.stringify({
+    //           appType: 1,
+    //           eventType: 10,
+    //           trackTime: new Date().toISOString(),
+    //           latitude: locationData.locations[0].coords.latitude,
+    //           longitude: locationData.locations[0].coords.longitude,
+    //           employeeId: this.props.userState.userDetails.employeeId,
+    //           tagType:null,
+    //           tagValue:null
+    //         })
+    //       }).then(response => response.json())
+    //         .then((data) =>{
+    // console.log("data",data);
+    //         })
+    //         .catch(error => dispatch(userCheckInFailure(error)));
+    //     });
 
     let geoOptions = {
       enableHighAccuracy: true,
@@ -89,11 +147,11 @@ componentWillUnmount() {
     };
     navigator.geolocation.getCurrentPosition(this.geoSuccess,
       this.geoFailure,
-      geoOptions);    
+      geoOptions);
   }
 
   geoSuccess = (position) => {
-  
+
     console.log('position', position);
     const location = [{
       "date": new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
@@ -101,25 +159,25 @@ componentWillUnmount() {
       "subtitle": "(GPS)"
     }]
     this.props.updateState({ coords: position.coords, history: location });
-    
+
   }
   geoFailure = (err) => {
     console.log('err', err);
     //this.setState({ error: err.message });
   }
 
-  call(number){
+  call(number) {
     let phoneNumber = '';
     if (Platform.OS === 'android') { phoneNumber = `tel:${number}`; }
-    else {phoneNumber = `telprompt:${number}`; }
+    else { phoneNumber = `telprompt:${number}`; }
     Linking.openURL(phoneNumber);
   }
 
   _card(name) {
     console.log('Card: ' + name)
     if (name === "Check In/Out") {
-     this.props.navigation.navigate("CheckInOutScreen")
-      
+      this.props.navigation.navigate("CheckInOutScreen")
+
     }
     if (name === "Site Visit") {
       this.props.navigation.navigate("SiteVisitScreen")
@@ -133,12 +191,12 @@ componentWillUnmount() {
 
   };
 
-  render(){
-    const { userDetails, responseTriggerred, successMessage, failureMessage, login, coords,call911 } = this.props.userState;
+  render() {
+    const { userDetails, responseTriggerred, successMessage, failureMessage, login, coords, call911 } = this.props.userState;
     let content;
-    if(call911){
-      content=
-      <Button
+    if (call911) {
+      content =
+        <Button
           title="Call-911"
           color="red"
           onPress={() => this.call(911)}
@@ -146,74 +204,74 @@ componentWillUnmount() {
     }
     const HomeScreen = () => {
       return (
-        
-      <View style={styles.container}>
-      <View style={{ height: 100, backgroundColor: '#2898fe' }}>
-        <LinearGradient colors={['#24c6dc', '#24c6dc', '#514a9d']} style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}>
-          <Image
-            style={{ width: 50, height: 50, borderRadius: 50, }}
-            source={require('../assets/user.png')}
-          />
-          <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>{userDetails.userName}</Text>
-          <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}>Manager</Text>
-        </LinearGradient>
-      </View>
-      <LinearGradient colors={['#514a9d', '#24c6dc', '#24c6dc']} style={{ padding: 20, flex: 1 }}>
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
 
-          <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center',borderRadius:10 }}>
-            <TouchableOpacity onPress={() => this._card('Check In/Out')}>
+        <View style={styles.container}>
+          <View style={{ height: 100, backgroundColor: '#2898fe' }}>
+            <LinearGradient colors={['#24c6dc', '#24c6dc', '#514a9d']} style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}>
               <Image
-                style={{ width: 50, height: 50, }}
-                source={require('../assets/images/1.png')}
+                style={{ width: 50, height: 50, borderRadius: 50, }}
+                source={require('../assets/user.png')}
               />
-            </TouchableOpacity>
-            <Text style={{ fontWeight: 'bold' }}>Check In/Out</Text>
-
+              <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'white' }}>{userDetails.userName}</Text>
+              <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}>Manager</Text>
+            </LinearGradient>
           </View>
+          <LinearGradient colors={['#514a9d', '#24c6dc', '#24c6dc']} style={{ padding: 20, flex: 1 }}>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
 
-          <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center',borderRadius:10 }}>
-            <TouchableOpacity onPress={() => this._card('Site Visit')}>
-              <Image
-                style={{ width: 50, height: 50, }}
-                source={require('../assets/images/2.png')}
-              />
-            </TouchableOpacity>
-            <Text style={{ fontWeight: 'bold' }}>Site Visit</Text>
-          </View>
+              <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                <TouchableOpacity onPress={() => this._card('Check In/Out')}>
+                  <Image
+                    style={{ width: 50, height: 50, }}
+                    source={require('../assets/images/1.png')}
+                  />
+                </TouchableOpacity>
+                <Text style={{ fontWeight: 'bold' }}>Check In/Out</Text>
+
+              </View>
+
+              <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                <TouchableOpacity onPress={() => this._card('Site Visit')}>
+                  <Image
+                    style={{ width: 50, height: 50, }}
+                    source={require('../assets/images/2.png')}
+                  />
+                </TouchableOpacity>
+                <Text style={{ fontWeight: 'bold' }}>Site Visit</Text>
+              </View>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
+
+              <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                <TouchableOpacity onPress={() => this._card('Patrol')}>
+                  <Image
+                    style={{ width: 50, height: 50, }}
+                    source={require('../assets/images/3.png')}
+                  />
+                </TouchableOpacity>
+                <Text style={{ fontWeight: 'bold' }}>Patrol</Text>
+              </View>
+
+              <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
+                <TouchableOpacity onPress={() => this._card('Incident')}>
+                  <Image
+                    style={{ width: 50, height: 50, }}
+                    source={require('../assets/images/4.png')}
+                  />
+                </TouchableOpacity>
+                <Text style={{ fontWeight: 'bold' }}>Incident</Text>
+              </View>
+            </View>
+            <View style={{ marginLeft: 60, marginRight: 60, borderRadius: 60 }}>
+              {content}
+            </View>
+          </LinearGradient>
+
+          {/* <Dashboard items={items} background={true} card={this._card} column={2} /> */}
         </View>
-        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-
-          <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center',borderRadius:10 }}>
-            <TouchableOpacity onPress={() => this._card('Patrol')}>
-              <Image
-                style={{ width: 50, height: 50, }}
-                source={require('../assets/images/3.png')}
-              />
-            </TouchableOpacity>
-            <Text style={{ fontWeight: 'bold' }}>Patrol</Text>
-          </View>
-
-          <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center',borderRadius:10 }}>
-            <TouchableOpacity onPress={() => this._card('Incident')}>
-              <Image
-                style={{ width: 50, height: 50, }}
-                source={require('../assets/images/4.png')}
-              />
-            </TouchableOpacity>
-            <Text style={{ fontWeight: 'bold' }}>Incident</Text>
-          </View>
-        </View>
-        <View style={{marginLeft:60,marginRight:60,borderRadius:60}}>
-      {content}
-      </View>
-      </LinearGradient>
-      
-      {/* <Dashboard items={items} background={true} card={this._card} column={2} /> */}
-    </View>
       );
-  };
-    return(
+    };
+    return (
       <HomeScreen></HomeScreen>
     )
   }
