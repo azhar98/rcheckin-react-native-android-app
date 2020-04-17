@@ -154,6 +154,7 @@ class LoginScreen extends Component {
                             placeholder="PASSWORD"
                             underlineColorAndroid='transparent'
                             value={userDetails.password}
+                            secureTextEntry={true}
                             onChangeText={(e) => this.onValueChangeLogin(e, 'password')} />
                     </View>
                     <TouchableHighlight onPress={() => this.switchToRegistration()}>

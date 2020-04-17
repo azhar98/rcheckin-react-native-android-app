@@ -13,7 +13,8 @@ import {
     FlatList,
     ToastAndroid,
     ScrollView,
-    Alert
+    Alert,
+    BackHandler
 } from 'react-native';
 import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
 import Modal from 'react-native-modal';
@@ -45,6 +46,7 @@ class CheckInOutScreen extends Component {
         };
     }
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         console.log('props', this.props.userState)
         
         if (this.props.userState.coords.latitude !== null) {
@@ -54,12 +56,17 @@ class CheckInOutScreen extends Component {
             this.getLocation();
           }
 
-          //NfcManager.start();
+          NfcManager.start();
         
     }
 
     componentWillUnmount() {
-        //this._cleanUp();
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        this._cleanUp();
+    }
+
+    handleBackButton() {
+        alert('Test')
     }
 
     _cleanUp = () => {
@@ -109,7 +116,6 @@ class CheckInOutScreen extends Component {
             if (this.state.checkNfc) {    
                 this.setState({ checkNfc: false, });
             } else {
-                NfcManager.start();
                 this.readData();
             }
 
@@ -256,6 +262,14 @@ class CheckInOutScreen extends Component {
                         onGoogleVisionBarcodesDetected={this.barcodeRecognized}
                     >
                     </RNCamera>
+                    <Button
+                            title="Close"
+                            onPress={() => {
+                                if(this.state.data==null){
+                                    this.setState({checkQRCode:false})
+                                }
+                                this.setState({isModalVisible:false})}}
+                        />
                 </Modal>
             </View>
         );

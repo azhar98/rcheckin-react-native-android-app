@@ -55,7 +55,8 @@ class IncidentScreen extends Component {
     const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, accountButton, mainButton } = this.props.userState;
     console.log('Incident', successMessage)
     if (successMessage === 'IncidentSuccess') {
-      Alert.alert('Success')
+      Alert.alert('Successfully Send')
+      this.props.updateState({ successMessage: '',});
     }
     return (
       <View style={{ flex: 1, }}>
