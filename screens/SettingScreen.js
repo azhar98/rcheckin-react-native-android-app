@@ -17,7 +17,7 @@ import {
     ScrollView,
     Alert
 } from 'react-native';
-import { CheckBox, Button, ListItem, Header } from 'react-native-elements';
+import { CheckBox, Button, ListItem, Header, Icon } from 'react-native-elements';
 import styles from '../StyleSheets/LoginStyle';
 
 class SettingScreen extends Component {
@@ -49,8 +49,8 @@ class SettingScreen extends Component {
 
     }
 
-    logout(){
-        this.props.navigation.navigate('LoginScreen') 
+    logout() {
+        this.props.navigation.navigate('LoginScreen')
     }
 
     render() {
@@ -90,9 +90,15 @@ class SettingScreen extends Component {
                         </View> */}
 
                         <Header
-                            leftComponent={{ icon: 'menu', color: '#fff',onPress: () => this.props.navigation.openDrawer() }}
+                            leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
                             centerComponent={{ text: 'Setting', style: { color: '#fff' } }}
-                            rightComponent={{ icon: 'logout', color: '#fff',onPress: () => this.logout()}}
+                            rightComponent={<Icon
+                                name='sign-out'
+                                type='font-awesome'
+                                size={26}
+                                color="white"
+                                onPress={() => this.logout()}
+                            />}
                         />
                         <View style={{ padding: 10, justifyContent: 'center', alignItems: 'stretch', }}>
                             <View style={{ padding: 20, }}>

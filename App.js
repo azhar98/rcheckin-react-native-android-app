@@ -20,6 +20,7 @@ import PatrollScreen from './screens/PatrollScreen';
 import IncidentScreen from './screens/IncidentScreen';
 import SettingScreen from './screens/SettingScreen';
 import History from './screens/History';
+import SplashScreen from './screens/SplashScreen';
 import TagDefined from './screens/TagDefined';
 import store from './store/index';
 import { Provider } from 'react-redux';
@@ -30,6 +31,7 @@ const App = () => {
     <Provider store={store}>
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}> 
+        <Drawer.Screen name="Splashcreen" component={SplashScreen} />
         <Drawer.Screen name="LoginScreen" component={LoginScreen} />       
         <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
         <Drawer.Screen name="CheckInOutScreen" component={CheckInOutScreen} />

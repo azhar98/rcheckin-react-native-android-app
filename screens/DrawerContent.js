@@ -27,7 +27,7 @@ export function DrawerContent(props) {
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{flexDirection:'row',marginTop: 15}}>
+                        {/* <View style={{flexDirection:'row',marginTop: 15}}>
                             <Avatar.Image 
                                 source={{
                                     uri: 'https://scontent-maa2-1.xx.fbcdn.net/v/t1.0-9/52944323_2091549364214714_3093923968491454464_n.jpg?_nc_cat=100&_nc_sid=7aed08&_nc_ohc=Pn8ws2O3PBQAX-AocWT&_nc_ht=scontent-maa2-1.xx&oh=862e49d69b74e8bd16f3b4166d4eda1e&oe=5E9B4BFE'
@@ -38,7 +38,7 @@ export function DrawerContent(props) {
                                 <Title style={styles.title}>Pradip Debnath</Title>
                                 <Caption style={styles.caption}>@itzpradip</Caption>
                             </View>
-                        </View>
+                        </View> */}
                     </View>
 
                     <Drawer.Section style={styles.drawerSection}>
@@ -105,12 +105,12 @@ export function DrawerContent(props) {
                 <DrawerItem 
                     icon={({color, size}) => (
                         <Icon 
-                        name="ios-log-in" 
+                        name="ios-log-out" 
                         color={color}
                         size={size}
                         />
                     )}
-                    label="Sign In"
+                    label="Sign Out"
                     onPress={() => {props.navigation.navigate('LoginScreen')}}
                 />
             </Drawer.Section>
