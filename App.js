@@ -24,15 +24,26 @@ import SplashScreen from './screens/SplashScreen';
 import TagDefined from './screens/TagDefined';
 import store from './store/index';
 import { Provider } from 'react-redux';
+import {YellowBox} from 'react-native';
+import RootStackScreen from './screens/RootStackScreen';
 
 const Drawer = createDrawerNavigator();
+
+function Root() {
+  return (
+    <RootStackScreen/>
+  );
+}
+
 const App = () => {
+  console.disableYellowBox = true;
   return (
     <Provider store={store}>
     <NavigationContainer>
       <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}> 
-        <Drawer.Screen name="Splashcreen" component={SplashScreen} />
-        <Drawer.Screen name="LoginScreen" component={LoginScreen} />       
+        {/* <Drawer.Screen name="Splashcreen" component={SplashScreen} />
+        <Drawer.Screen name="LoginScreen" component={LoginScreen} />        */}
+        <Drawer.Screen name="Root" component={Root}/>
         <Drawer.Screen name="HomeDrawer" component={MainTabScreen} />
         <Drawer.Screen name="CheckInOutScreen" component={CheckInOutScreen} />
         <Drawer.Screen name="SiteVisitScreen" component={SiteVisitScreen} />
@@ -41,6 +52,7 @@ const App = () => {
         <Drawer.Screen name="SettingScreen" component={SettingScreen} />
         <Drawer.Screen name="HistoryScreen" component={History} />
         <Drawer.Screen name="TagDefinedScreen" component={TagDefined} />
+        
       </Drawer.Navigator>
     </NavigationContainer>
     </Provider>

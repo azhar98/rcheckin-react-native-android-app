@@ -106,7 +106,19 @@ class PatrollScreen extends Component {
 
   button() {
     console.log('hi')
-    this.props.userPatrol(this.state);
+    Alert.alert(
+      "Read a checkout",
+      "Press yes to read a checkout",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => this.props.userPatrol(this.state) }
+      ],
+      { cancelable: false }
+    );
   }
 
   readData = async () => {
@@ -166,7 +178,7 @@ class PatrollScreen extends Component {
       <View style={styles.container}>
         <Header
           leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
-          centerComponent={{ text: 'Patroll', style: { color: '#fff' } }}
+          centerComponent={{ text: 'Patrol', style: { color: '#fff' } }}
           rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen') }}
         />
         <View style={{ height: 50, backgroundColor: '#f4f0f0d6', justifyContent: 'center', paddingLeft: 10, }}>
@@ -193,9 +205,9 @@ class PatrollScreen extends Component {
             onPress={(title) => this.check('NFC')}
           />
         </View>
-        <View style={{ padding: 10, paddingLeft: Dimensions.get('window').width - 140 }}>
+        <View style={{ padding: 10, paddingLeft: Dimensions.get('window').width - 180 }}>
           <Button
-            title="Checkpoint"
+            title="Read a Checkpoint"
             onPress={() => this.button()}
           />
         </View>
@@ -228,15 +240,24 @@ class PatrollScreen extends Component {
             onGoogleVisionBarcodesDetected={this.barcodeRecognized}
           >
           </RNCamera>
+          <Button
+            title="Close"
+            onPress={() => {
+              if (this.state.data == null) {
+                this.setState({ petrolQRCode: false })
+              }
+              this.setState({ isModalVisible: false })
+            }}
+          />
         </Modal>
       </View>
     );
   }
   barcodeRecognized = ({ barcodes }) => {
-    barcodes.forEach(barcode => {
-      this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcode.data })
-      alert(`Bar code data ${barcode.data} has been scanned!`);
-    })
+    // barcodes.forEach(barcode => {
+      this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcode[0].data })
+      alert(`Bar code data ${barcode[0].data} has been scanned!`);
+    // })
 
   };
 }

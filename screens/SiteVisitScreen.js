@@ -13,7 +13,8 @@ import {
     FlatList,
     ToastAndroid,
     ScrollView,
-    Alert
+    Alert,
+    BackHandler
 } from 'react-native';
 import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
 import Modal from 'react-native-modal';
@@ -36,8 +37,10 @@ class SiteVisitScreen extends Component {
             tagType: null,
             data: null,
         };
+        this.handleBackButton = this.handleBackButton.bind(this);
     }
     componentDidMount() {
+        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         console.log('props', this.props.userState)
         if (this.props.userState.coords.latitude !== null) {
             this.setState({ siteVisitGps: true })
@@ -50,7 +53,15 @@ class SiteVisitScreen extends Component {
     }
 
     componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
         this._cleanUp();
+    }
+
+    handleBackButton() {
+        if (this.props.route.name=="SiteVisitScreen") {
+            this.props.navigation.navigate("HomeDrawer")
+        }
+        return true;
     }
 
     _cleanUp = () => {
@@ -106,11 +117,37 @@ class SiteVisitScreen extends Component {
         console.log('hi')
         //
         if (name == "Begin Visit") {
+            Alert.alert(
+                "Begin Visit",
+                "Press yes to begin visit",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => this.props.userBeginVisit(this.state) }
+                ],
+                { cancelable: false }
+              );
 
-            this.props.userBeginVisit(this.state);
+            
         }
         if (name == "End Visit") {
-            this.props.userEndVisit(this.state);
+            Alert.alert(
+                "End Visit",
+                "Press yes to end visit",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => this.props.userEndVisit(this.state) }
+                ],
+                { cancelable: false }
+              );
+            
         }
     }
 
@@ -165,7 +202,7 @@ class SiteVisitScreen extends Component {
 
 
     render() {
-        const { userDetails, responseTriggerred, successMessage, failureMessage, login, siteVisitGps, siteVisitQRCode, siteVisitNfc, visitlist, calendericon, clockicon } = this.props.userState;
+        const { userDetails, responseTriggerred, successMessage, failureMessage, login, siteVisitGps, siteVisitQRCode, siteVisitNfc, visitlist, calendericon, clockicon,userVisit } = this.props.userState;
         console.log('Site Visit', successMessage)
 
         return (
@@ -203,6 +240,7 @@ class SiteVisitScreen extends Component {
                     <View>
                         <Button
                             title="Begin Visit"
+                            disabled={userVisit.startVisit}
                             onPress={() => this.button('Begin Visit')}
                         />
                     </View>
@@ -211,6 +249,7 @@ class SiteVisitScreen extends Component {
                     <View>
                         <Button
                             title="End Visit"
+                            disabled={userVisit.endVisit}
                             onPress={() => this.button('End Visit')}
                         />
                     </View>
@@ -244,15 +283,24 @@ class SiteVisitScreen extends Component {
                         onGoogleVisionBarcodesDetected={this.barcodeRecognized}
                     >
                     </RNCamera>
+                    <Button
+                        title="Close"
+                        onPress={() => {
+                            if (this.state.data == null) {
+                                this.setState({ siteVisitQRCode: false })
+                            }
+                            this.setState({ isModalVisible: false })
+                        }}
+                    />
                 </Modal>
             </View>
         );
     }
     barcodeRecognized = ({ barcodes }) => {
-        barcodes.forEach(barcode => {
-            this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcode.data })
-            alert(`Bar code data ${barcode.data} has been scanned!`);
-        })
+        // barcodes.forEach(barcode => {
+            this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcode[0].data })
+            alert(`Bar code data ${barcode[0].data} has been scanned!`);
+        //})
 
     };
 }

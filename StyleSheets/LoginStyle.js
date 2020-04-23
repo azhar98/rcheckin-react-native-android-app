@@ -50,6 +50,7 @@ export default StyleSheet.create({
         marginBottom: 20,
         width: 200,
         borderRadius: 30,
+        marginTop:20
     },
     loginButton: {
         backgroundColor: "#00b5ec",

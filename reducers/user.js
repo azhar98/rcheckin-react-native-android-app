@@ -32,6 +32,16 @@ const initialState = {
   siteVisitNfc: true,
   calendericon: 'date-range',
   clockicon: 'timer',
+  userCheckIn:{
+    checkIn:false,
+    checkOut:true,
+  },
+
+  userVisit:{
+    startVisit:false,
+    endVisit:true,
+  },
+  
 
   list: [],
 
@@ -173,12 +183,14 @@ const handlers = {
   [USER_TYPE.CHECKIN_USER_SUCCESS]: (state, action) => {
     console.log(action)
     
-    const { list,history } = state;
+    const { list,history,userCheckIn } = state;
     if (action.payload.success == true) {
       successMessage = 'CHECKINSuccess';
       result = action.payload.result,
         targetUrl = action.payload.targetUrl,
         success = action.payload.success,
+        userCheckIn.checkIn = true,
+        userCheckIn.checkOut = false,
         list.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
         history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(CheckIN)'});
         console.log('list',list)
@@ -219,12 +231,14 @@ const handlers = {
   },
   [USER_TYPE.CHECKOUT_USER_SUCCESS]: (state, action) => {
     console.log(action)
-    const { list,history } = state;
+    const { list,history,userCheckIn } = state;
     if (action.payload.success == true) {
       successMessage = 'CHECKOUTSuccess';
       result = action.payload.result,
         targetUrl = action.payload.targetUrl,
         success = action.payload.success,
+        userCheckIn.checkOut = true,
+        userCheckIn.checkIn = false,
         list.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
         history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(CheckOUT)'});
         console.log('list',list)
@@ -311,12 +325,14 @@ const handlers = {
 },
 [USER_TYPE.BEGINVISIT_USER_SUCCESS]: (state, action) => {
   console.log(action)
-  const { visitlist,history } = state;
+  const { visitlist,history,userVisit } = state;
   if (action.payload.success == true) {
     successMessage = 'BeginVisitSuccess';
     result = action.payload.result,
       targetUrl = action.payload.targetUrl,
       success = action.payload.success,
+      userVisit.startVisit=true,
+      userVisit.endVisit=false,
       visitlist.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
       history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(BeginVISIT)'});
       console.log('list',visitlist)
@@ -358,12 +374,14 @@ const handlers = {
 },
 [USER_TYPE.ENDVISIT_USER_SUCCESS]: (state, action) => {
   console.log(action)
-  const { visitlist,history } = state;
+  const { visitlist,history,userVisit } = state;
   if (action.payload.success == true) {
     successMessage = 'EndVisitSuccess';
     result = action.payload.result,
       targetUrl = action.payload.targetUrl,
       success = action.payload.success,
+      userVisit.startVisit=false,
+      userVisit.endVisit=true,
       visitlist.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
       history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(EndVISIT)'});
       console.log('list',visitlist)

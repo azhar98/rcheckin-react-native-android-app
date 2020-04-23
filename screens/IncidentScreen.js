@@ -39,7 +39,12 @@ class IncidentScreen extends Component {
   }
 
   buttonSend() {
-    this.props.userIncident(this.state);
+    console.log('state',this.state)
+    if(this.state.Subject!==""&&this.state.Content!=""){
+      this.props.userIncident(this.state);
+    }else{
+      Alert.alert('Subject or content can not be empty')
+    }
   }
 
   onValueChangeIncident = (value, id) => {
@@ -72,7 +77,7 @@ class IncidentScreen extends Component {
         />
         <View style={{ height: 20 }}></View>
         <Input
-          placeholder='Content'
+          placeholder='Comment'
           value={this.state.Content}
           onChangeText={(e) => this.onValueChangeIncident(e, 'Content')}
         />

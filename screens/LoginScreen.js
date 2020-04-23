@@ -7,7 +7,6 @@ import { userLogin, userRegistration, updateState } from '../actions/user';
 import {
     Text,
     View,
-    Button,
     Image,
     ImageBackground,
     TextInput,
@@ -17,15 +16,22 @@ import {
     Keyboard,
     Platform,
     Alert,
-    BackHandler
+    BackHandler,
+    TouchableOpacity
 } from 'react-native';
 import styles from '../StyleSheets/LoginStyle';
 import { URI } from '../constants';
+import { Button } from 'react-native-elements';
 
 
 class LoginScreen extends Component {
+
     constructor(props) {
         super(props);
+        this.state={
+            loginButtonDisable:false,
+        }
+        this.handleBackButton = this.handleBackButton.bind(this);
     }
 
     componentDidMount() {
@@ -37,6 +43,12 @@ class LoginScreen extends Component {
     }
 
     handleBackButton() {
+        console.log('nav',this.props)
+        if (this.props.route.name=="LoginScreen") {
+            this.props.navigation.navigate("LoginScreen")
+        } else {
+            this.props.navigation.navigate("LoginScreen")
+        }
         return true;
     }
 
@@ -76,6 +88,7 @@ class LoginScreen extends Component {
     }
 
     login() {
+        this.setState({loginButtonDisable:true})
         const { userDetails } = this.props.userState;
         fetch(`${URI.login}`, {
             method: 'POST',
@@ -88,14 +101,18 @@ class LoginScreen extends Component {
             }),
         }).then(response => response.json())
             .then((data) => {
-                console.log('data',data)
-                if(data.success==true){
+                console.log('data', data)
+                if (data.success == true) {
                     this.props.updateState({ userDetails: data.result });
+                    this.setState({loginButtonDisable:false})
                     this.props.navigation.navigate("HomeDrawer")
-                }else{
+                    
+                } else {
+                    
                     alert("Wrong Username or Password")
+                    this.setState({loginButtonDisable:false})
                 }
-                
+
             })
             .catch((error) => { alert(error) });
     }
@@ -105,8 +122,10 @@ class LoginScreen extends Component {
         const { userDetails } = this.props.userState;
         fetch(`${URI.registration}`, {
             method: 'post',
-            headers: { 'Content-Type': 'application/json', 
-            'Accept': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify({
                 tenancyName: userDetails.tenancyName,
                 phoneNo: userDetails.phoneNo,
@@ -116,14 +135,14 @@ class LoginScreen extends Component {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('data',data);
-                if(data.success==true){
+                console.log('data', data);
+                if (data.success == true) {
                     alert("Registration Successfull")
-                }else{
+                } else {
                     alert("Registration Failure")
                 }
-                })
-            .catch(error => {alert(error)});
+            })
+            .catch(error => { alert(error) });
 
     }
 
@@ -154,15 +173,21 @@ class LoginScreen extends Component {
                             placeholder="PASSWORD"
                             underlineColorAndroid='transparent'
                             value={userDetails.password}
+                            keyboardType="default"
                             secureTextEntry={true}
                             onChangeText={(e) => this.onValueChangeLogin(e, 'password')} />
                     </View>
-                    <TouchableHighlight onPress={() => this.switchToRegistration()}>
+                    <Button
+                        title="Registration"
+                        type="clear"
+                        onPress={() => this.switchToRegistration()}
+                    />
+                    {/* <TouchableHighlight onPress={() => this.switchToRegistration()}>
                         <Text style={styles.underlineText}>Registration</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
+                    </TouchableHighlight> */}
+                    <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')} disabled={this.state.loginButtonDisable}>
                         <Text style={styles.loginText}>Login</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
         } else {
             content =
@@ -178,6 +203,7 @@ class LoginScreen extends Component {
                         <TextInput style={styles.inputs}
                             placeholder="TELEPHONE"
                             value={userDetails.telephone}
+                            keyboardType="numeric"
                             onChangeText={(e) => this.onValueChangeRegistration(e, 'telephone')} />
                     </View>
                     <View style={styles.inputContainer}>
@@ -190,16 +216,22 @@ class LoginScreen extends Component {
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="PASSWORD"
+                            keyboardType="default"
                             underlineColorAndroid='transparent'
                             value={userDetails.password}
                             onChangeText={(e) => this.onValueChangeRegistration(e, 'password')} />
                     </View>
-                    <TouchableHighlight onPress={() => this.switchToLogin()}>
+                    <Button
+                        title="Login"
+                        type="clear"
+                        onPress={() => this.switchToLogin()}
+                    />
+                    {/* <TouchableHighlight onPress={() => this.switchToLogin()}>
                         <Text style={styles.underlineText}>Login</Text>
-                    </TouchableHighlight>
-                    <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('registration')}>
+                    </TouchableHighlight> */}
+                    <TouchableOpacity style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('registration')}>
                         <Text style={styles.loginText}>Registration</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
         }
 

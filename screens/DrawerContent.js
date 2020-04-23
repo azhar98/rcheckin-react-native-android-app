@@ -98,7 +98,7 @@ export function DrawerContent(props) {
                                     size={size}
                                 />
                             )}
-                            label="Patroll"
+                            label="Patrol"
                             onPress={() => { props.navigation.navigate('PatrollScreen') }}
                         />
                         <DrawerItem
@@ -130,6 +130,9 @@ export function DrawerContent(props) {
                 />
             </Drawer.Section>
             {content}
+            <View style={{justifyContent:'center',alignItems:'center'}}>
+                <Text style={{textDecorationLine:'underline',fontStyle:'italic'}}>Current version 0.0.1</Text>
+            </View>
         </View>
     );
 }

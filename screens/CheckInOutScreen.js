@@ -16,7 +16,7 @@ import {
     Alert,
     BackHandler
 } from 'react-native';
-import { CheckBox, Button, ListItem,Header } from 'react-native-elements';
+import { CheckBox, Button, ListItem, Header } from 'react-native-elements';
 import Modal from 'react-native-modal';
 import { RNCamera } from 'react-native-camera';
 import NfcManager, { NfcTech } from 'react-native-nfc-manager';
@@ -43,21 +43,23 @@ class CheckInOutScreen extends Component {
             scanned: false,
             tagType: null,
             data: null,
+            status:'(check)'
         };
+        this.handleBackButton = this.handleBackButton.bind(this);
     }
     componentDidMount() {
         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
         console.log('props', this.props.userState)
-        
+
         if (this.props.userState.coords.latitude !== null) {
             this.setState({ checkGps: true })
-          }
-          else{
+        }
+        else {
             this.getLocation();
-          }
+        }
 
-          NfcManager.start();
-        
+        NfcManager.start();
+
     }
 
     componentWillUnmount() {
@@ -66,6 +68,9 @@ class CheckInOutScreen extends Component {
     }
 
     handleBackButton() {
+        if (this.props.route.name=="CheckInOutScreen") {
+            this.props.navigation.navigate("HomeDrawer")
+        }
         return true;
     }
 
@@ -113,7 +118,7 @@ class CheckInOutScreen extends Component {
             }
 
         } else if (title == 'NFC') {
-            if (this.state.checkNfc) {    
+            if (this.state.checkNfc) {
                 this.setState({ checkNfc: false, });
             } else {
                 this.readData();
@@ -124,10 +129,35 @@ class CheckInOutScreen extends Component {
 
     button(name) {
         if (name == "Check In") {
-            this.props.userCheckIn(this.state);
+            Alert.alert(
+                "Check In",
+                "Press yes to check in",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => this.props.userCheckIn(this.state) }
+                ],
+                { cancelable: false }
+              );
         }
         if (name == "Check Out") {
-            this.props.userCheckOut(this.state);
+            Alert.alert(
+                "Check Out",
+                "Press yes to check out",
+                [
+                  {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  },
+                  { text: "OK", onPress: () => this.props.userCheckOut(this.state) }
+                ],
+                { cancelable: false }
+              );
+            
         }
     }
 
@@ -150,12 +180,12 @@ class CheckInOutScreen extends Component {
             bytes = resp.toString().split(",");
             let text = "";
 
-            for(let i=0; i<bytes.length; i++){
-                if (i < 5){
+            for (let i = 0; i < bytes.length; i++) {
+                if (i < 5) {
                     continue;
                 }
 
-                if (parseInt(bytes[i]) === 254){
+                if (parseInt(bytes[i]) === 254) {
                     break;
                 }
 
@@ -180,18 +210,18 @@ class CheckInOutScreen extends Component {
     }
 
     render() {
-        const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, list, calendericon, clockicon } = this.props.userState;
+        const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, list, calendericon, clockicon,userCheckIn } = this.props.userState;
         console.log('succcccccc', successMessage);
         console.log('this.props.userState', this.props.userState)
-        
+
         return (
-            
+
             <View style={styles.container}>
-            <Header
-            leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer()}}
-            centerComponent={{ text: 'Check In/Out', style: { color: '#fff' } }}
-            rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('SettingScreen')}}
-        />
+                <Header
+                    leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
+                    centerComponent={{ text: 'Check In/Out', style: { color: '#fff' } }}
+                    rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen') }}
+                />
 
                 <View style={{ height: 50, backgroundColor: '#f4f0f0d6', justifyContent: 'center', paddingLeft: 10, }}>
                     <Text style={{ fontWeight: 'bold' }}>Track With</Text>
@@ -221,6 +251,7 @@ class CheckInOutScreen extends Component {
                     <View>
                         <Button
                             title="Check In"
+                            disabled={userCheckIn.checkIn}
                             onPress={() => this.button('Check In')}
                         />
                     </View>
@@ -229,6 +260,7 @@ class CheckInOutScreen extends Component {
                     <View>
                         <Button
                             title="Check Out"
+                            disabled={userCheckIn.checkOut}
                             onPress={() => this.button('Check Out')}
                         />
                     </View>
@@ -243,7 +275,7 @@ class CheckInOutScreen extends Component {
                                     leftIcon={{ name: calendericon }}
                                     rightIcon={{ name: clockicon }}
                                     rightTitle={item.time}
-                                    rightSubtitle='(Patrol)'
+                                    rightSubtitle={this.state.status}
                                     bottomDivider
                                 />
                             ))
@@ -263,22 +295,24 @@ class CheckInOutScreen extends Component {
                     >
                     </RNCamera>
                     <Button
-                            title="Close"
-                            onPress={() => {
-                                if(this.state.data==null){
-                                    this.setState({checkQRCode:false})
-                                }
-                                this.setState({isModalVisible:false})}}
-                        />
+                        title="Close"
+                        onPress={() => {
+                            if (this.state.data == null) {
+                                this.setState({ checkQRCode: false })
+                            }
+                            this.setState({ isModalVisible: false })
+                        }}
+                    />
                 </Modal>
             </View>
         );
     }
     barcodeRecognized = ({ barcodes }) => {
-        barcodes.forEach(barcode => {
-            this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcode.data })
-            alert(`Bar code data ${barcode.data} has been scanned!`);
-        })
+        console.log('barcode',barcodes)
+        //barcodes.forEach(barcode => {
+            this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcodes[0].data })
+            alert(`Bar code data ${barcodes[0].data} has been scanned!`);
+        //})
 
     };
     //   handleBarCodeScanned = ({ type, data }) => {
