@@ -255,8 +255,8 @@ class PatrollScreen extends Component {
   }
   barcodeRecognized = ({ barcodes }) => {
     // barcodes.forEach(barcode => {
-      this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcode[0].data })
-      alert(`Bar code data ${barcode[0].data} has been scanned!`);
+      this.setState({ scanned: true, isModalVisible: !this.state.isModalVisible, data: barcodes[0].data })
+      alert(`Bar code data ${barcodes[0].data} has been scanned!`);
     // })
 
   };
