@@ -15,8 +15,7 @@ import {
   Linking,
   Alert
 } from 'react-native';
-navigator.geolocation = require('@react-native-community/geolocation')
-import LinearGradient from 'react-native-linear-gradient';
+navigator.geolocation = require('@react-native-community/geolocation');
 import BackgroundFetch from "react-native-background-fetch";
 import { URI } from '../constants';
 import store from '../store/index';
@@ -151,16 +150,16 @@ debugger
 
         <View style={styles.container}>
           <View style={{ height: 100, backgroundColor: '#2898fe' }}>
-            <LinearGradient colors={['#eef2f3', '#eef2f3', '#8e9eab']} style={{ justifyContent: 'center', alignItems: 'center', padding: 10 }}>
+            <View style={{ justifyContent: 'center', alignItems: 'center', padding: 10,backgroundColor:'#ecf0f1' }}>
               <Image
                 style={{ width: 50, height: 50, borderRadius: 50, }}
                 source={require('../assets/user.png')}
               />
               <Text style={{ fontSize: 15, fontWeight: 'bold', color: 'black' }}>{userDetails.userName}</Text>
               <Text style={{ fontSize: 12, fontWeight: 'bold', color: 'white' }}></Text>
-            </LinearGradient>
+            </View>
           </View>
-          <LinearGradient colors={['#8e9eab', '#eef2f3', '#eef2f3']} style={{ padding: 20, flex: 1 }}>
+          <View style={{ padding: 20, flex: 1 }}>
             <View style={{ flex: 0.7, flexDirection: 'row', justifyContent: 'space-between' }}>
 
               <View style={{ flex: 0.4, backgroundColor: 'white', height: 150, alignItems: 'center', justifyContent: 'center', borderRadius: 10 }}>
@@ -206,7 +205,7 @@ debugger
                 <Text style={{ fontWeight: 'bold' }}>Incident</Text>
               </View>
             </View>
-          </LinearGradient>
+          </View>
 
           {/* <Dashboard items={items} background={true} card={this._card} column={2} /> */}
         </View>
