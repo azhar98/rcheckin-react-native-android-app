@@ -54,12 +54,10 @@ class LoginScreen extends Component {
 
 
     switchToRegistration() {
-        Keyboard.dismiss()
         this.props.updateState({ login: false });
     }
 
     switchToLogin() {
-        Keyboard.dismiss()
         this.props.updateState({ login: true });
     }
 
@@ -119,6 +117,7 @@ class LoginScreen extends Component {
 
 
     registration() {
+        debugger;
         const { userDetails } = this.props.userState;
         fetch(`${URI.registration}`, {
             method: 'post',
@@ -128,18 +127,18 @@ class LoginScreen extends Component {
             },
             body: JSON.stringify({
                 tenancyName: userDetails.tenancyName,
-                phoneNo: userDetails.phoneNo,
+                phoneNo: userDetails.telephone,
                 userName: userDetails.userName,
-                password: userDetails.password
+                password: userDetails.rpassword
             })
         })
             .then(response => response.json())
             .then(data => {
                 console.log('data', data);
-                if (data.success == true) {
+                if (data.success == true && data.error==null) {
                     alert("Registration Successfull")
                 } else {
-                    alert("Registration Failure")
+                    alert(data.error.message)
                 }
             })
             .catch(error => { alert(error) });
@@ -164,17 +163,14 @@ class LoginScreen extends Component {
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="USERNAME"
-                            underlineColorAndroid='transparent'
                             value={userDetails.usernameOrEmailAddress}
                             onChangeText={(e) => this.onValueChangeLogin(e, 'usernameOrEmailAddress')} />
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="PASSWORD"
-                            underlineColorAndroid='transparent'
-                            value={userDetails.password}
-                            keyboardType="default"
                             secureTextEntry={true}
+                            value={userDetails.password}
                             onChangeText={(e) => this.onValueChangeLogin(e, 'password')} />
                     </View>
                     <Button
@@ -195,7 +191,6 @@ class LoginScreen extends Component {
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="TENANCY NAME"
-                            underlineColorAndroid='transparent'
                             value={userDetails.tenancyName}
                             onChangeText={(e) => this.onValueChangeRegistration(e, 'tenancyName')} />
                     </View>
@@ -203,23 +198,19 @@ class LoginScreen extends Component {
                         <TextInput style={styles.inputs}
                             placeholder="TELEPHONE"
                             value={userDetails.telephone}
-                            keyboardType="numeric"
                             onChangeText={(e) => this.onValueChangeRegistration(e, 'telephone')} />
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="USERNAME"
-                            underlineColorAndroid='transparent'
                             value={userDetails.userName}
                             onChangeText={(e) => this.onValueChangeRegistration(e, 'userName')} />
                     </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="PASSWORD"
-                            keyboardType="default"
-                            underlineColorAndroid='transparent'
-                            value={userDetails.password}
-                            onChangeText={(e) => this.onValueChangeRegistration(e, 'password')} />
+                            value={userDetails.rpassword}
+                            onChangeText={(e) => this.onValueChangeRegistration(e, 'rpassword')} />
                     </View>
                     <Button
                         title="Login"

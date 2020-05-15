@@ -44,7 +44,6 @@ class HomeScreen extends Component {
       requiresStorageNotLow: false  // Default
     }, async (taskId) => {
       console.log("[js] Received background-fetch event: ", taskId);
-debugger
       navigator.geolocation.getCurrentPosition(this.geoSuccess,
         this.geoFailure,
         geoOptions);

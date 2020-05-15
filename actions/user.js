@@ -43,7 +43,7 @@ export function userLoginFailure(error) {
 
 // ================ For Registation ====================
 export function userRegistration() {
-  
+  debugger
   return (dispatch, getState) => {
     const { userDetails } = getState().userState;
     fetch(`${URI.registration}`, {
