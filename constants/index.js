@@ -1,6 +1,6 @@
 export const Constants = {};
 
-export const HOST_NAME = 'http://test.bwacsys.com/api/';
+export const HOST_NAME = 'http://testpatrol.bwacsys.com/api/';
 
 export const URI = {
 
