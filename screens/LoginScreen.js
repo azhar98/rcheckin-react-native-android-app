@@ -113,6 +113,7 @@ class LoginScreen extends Component {
 
             })
             .catch((error) => { alert(error) });
+            this.setState({loginButtonDisable:false})
     }
 
 
