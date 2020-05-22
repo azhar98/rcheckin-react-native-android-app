@@ -126,7 +126,8 @@ export function DrawerContent(props) {
                         />
                     )}
                     label="Sign Out"
-                    onPress={() => { props.navigation.navigate('LoginScreen') }}
+                    onPress={() => { store.getState().userState.userDetails.length=0;
+                    props.navigation.navigate('LoginScreen') }}
                 />
             </Drawer.Section>
             {content}

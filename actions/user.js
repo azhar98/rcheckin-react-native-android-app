@@ -83,7 +83,7 @@ export function userRegistrationFailure(error) {
 // ================ For CheckIn ====================
 export function userCheckIn(state) {
   console.log('state', state)
-  
+  debugger
   return (dispatch, getState) => {
     const { userDetails, coords } = getState().userState;
     fetch(`${URI.checkInOrOut}`, {
@@ -199,9 +199,10 @@ export function userBeginVisitFailure(error) {
 // ================ For EndVisit ====================
 export function userEndVisit(state) {
   console.log('state', state)
+  debugger
   return (dispatch, getState) => {
     const { userDetails, coords } = getState().userState;
-    fetch(`${URI.checkInOrOut}`, {
+    fetch(`${URI.visitSite}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({

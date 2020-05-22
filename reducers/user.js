@@ -182,7 +182,7 @@ const handlers = {
   },
   [USER_TYPE.CHECKIN_USER_SUCCESS]: (state, action) => {
     console.log(action)
-    
+    debugger
     const { list,history,userCheckIn } = state;
     if (action.payload.success == true) {
       successMessage = 'CHECKINSuccess';
@@ -374,6 +374,7 @@ const handlers = {
 },
 [USER_TYPE.ENDVISIT_USER_SUCCESS]: (state, action) => {
   console.log(action)
+  debugger
   const { visitlist,history,userVisit } = state;
   if (action.payload.success == true) {
     successMessage = 'EndVisitSuccess';

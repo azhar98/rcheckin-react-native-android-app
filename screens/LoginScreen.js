@@ -137,7 +137,7 @@ class LoginScreen extends Component {
             .then(data => {
                 console.log('data', data);
                 if (data.success == true && data.error==null) {
-                    alert("Registration Successfull")
+                    alert("Registration Successfully")
                 } else {
                     alert(data.error.message)
                 }

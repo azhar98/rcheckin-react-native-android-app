@@ -60,7 +60,7 @@ const MainTabScreen = () => (
         }}
       />
       <Tab.Screen
-        name="Patroll"
+        name="Patrol"
         component={PatrollScreen}
         options={{
           tabBarLabel: 'Patroll',

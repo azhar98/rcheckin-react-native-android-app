@@ -201,7 +201,6 @@ class CheckInOutScreen extends Component {
 
             this._cleanUp();
         } catch (ex) {
-            alert(ex.toString())
             this.setState({
                 data: ex.toString()
             })
@@ -230,7 +229,7 @@ class CheckInOutScreen extends Component {
                     <CheckBox
                         title='GPS'
                         checked={this.state.checkGps}
-                        onPress={(title) => this.check('GPS')}
+                        //onPress={(title) => this.check('GPS')}
                     />
                 </View>
                 <View>

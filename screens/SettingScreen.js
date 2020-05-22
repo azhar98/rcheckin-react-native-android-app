@@ -50,7 +50,8 @@ class SettingScreen extends Component {
     }
 
     logout() {
-        this.props.navigation.navigate('LoginScreen')
+        this.props.userState.userDetails.length=0;
+        this.props.navigation.navigate('LoginScreen');
     }
 
     render() {

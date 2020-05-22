@@ -119,14 +119,14 @@ class SiteVisitScreen extends Component {
         if (name == "Begin Visit") {
             Alert.alert(
                 "Begin Visit",
-                "Press yes to begin visit",
+                "Select Yes to Begin Visit.",
                 [
                   {
                     text: "Cancel",
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => this.props.userBeginVisit(this.state) }
+                  { text: "Yes", onPress: () => this.props.userBeginVisit(this.state) }
                 ],
                 { cancelable: false }
               );
@@ -136,14 +136,14 @@ class SiteVisitScreen extends Component {
         if (name == "End Visit") {
             Alert.alert(
                 "End Visit",
-                "Press yes to end visit",
+                "Select Yes to End Visit",
                 [
                   {
                     text: "Cancel",
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => this.props.userEndVisit(this.state) }
+                  { text: "Yes", onPress: () => this.props.userEndVisit(this.state) }
                 ],
                 { cancelable: false }
               );
@@ -219,7 +219,7 @@ class SiteVisitScreen extends Component {
                     <CheckBox
                         title='GPS'
                         checked={this.state.siteVisitGps}
-                        onPress={(title) => this.check('GPS')}
+                        //onPress={(title) => this.check('GPS')}
                     />
                 </View>
                 <View>

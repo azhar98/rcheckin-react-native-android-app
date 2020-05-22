@@ -42,8 +42,12 @@ class IncidentScreen extends Component {
     console.log('state',this.state)
     if(this.state.Subject!==""&&this.state.Content!=""){
       this.props.userIncident(this.state);
+    }else if(this.state.Subject==""&&this.state.Content!=""){
+      Alert.alert('Subject cannot be empty.')
+    }else if(this.state.Content==""&&this.state.Subject!=""){
+      Alert.alert('Content cannot be empty.')
     }else{
-      Alert.alert('Subject or content can not be empty')
+      Alert.alert('Subject or content cannot be empty.')
     }
   }
 
@@ -60,7 +64,7 @@ class IncidentScreen extends Component {
     const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, accountButton, mainButton } = this.props.userState;
     console.log('Incident', successMessage)
     if (successMessage === 'IncidentSuccess') {
-      Alert.alert('Successfully Send')
+      Alert.alert('Successfully sent')
       this.props.updateState({ successMessage: '',});
     }
     return (

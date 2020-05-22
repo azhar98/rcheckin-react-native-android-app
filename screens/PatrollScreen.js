@@ -107,15 +107,15 @@ class PatrollScreen extends Component {
   button() {
     console.log('hi')
     Alert.alert(
-      "Read a checkout",
-      "Press yes to read a checkout",
+      "Read a Checkpoint",
+      "Press Yes to read a checkpoint",
       [
         {
           text: "Cancel",
           onPress: () => console.log("Cancel Pressed"),
           style: "cancel"
         },
-        { text: "OK", onPress: () => this.props.userPatrol(this.state) }
+        { text: "Yes", onPress: () => this.props.userPatrol(this.state) }
       ],
       { cancelable: false }
     );
@@ -188,7 +188,7 @@ class PatrollScreen extends Component {
           <CheckBox
             title='GPS'
             checked={this.state.petrolGps}
-            onPress={(title) => this.check('GPS')}
+            //onPress={(title) => this.check('GPS')}
           />
         </View>
         <View>
