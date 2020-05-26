@@ -104,10 +104,17 @@ class LoginScreen extends Component {
                     this.props.updateState({ userDetails: data.result });
                     this.setState({loginButtonDisable:false})
                     this.props.navigation.navigate("HomeDrawer")
-                    
+                    Alert.alert(
+                        "Logged In",
+                        "You have been Successfully Logged In.",
+                        [
+                          { text: "OK", onPress: () => console.log("OK Pressed") }
+                        ],
+                        { cancelable: false }
+                      );
                 } else {
                     
-                    alert("Wrong Username or Password")
+                    alert("Please enter valid user name and password.")
                     this.setState({loginButtonDisable:false})
                 }
 
@@ -137,9 +144,22 @@ class LoginScreen extends Component {
             .then(data => {
                 console.log('data', data);
                 if (data.success == true && data.error==null) {
-                    alert("Registration Successfully")
+                    Alert.alert(
+                        "Registered",
+                        "You have been Successfully Registered.",
+                        [
+                          { text: "OK", onPress: () => console.log("OK Pressed") }
+                        ],
+                        { cancelable: false }
+                      );
                 } else {
-                    alert(data.error.message)
+                    if(data.error.message==="Email '5727_dummy@bcsint.com' is already taken."){
+                        alert("The user with the same telephone number is already registered.")
+                    }
+                    else{
+                        alert(data.error.message)
+                    }
+                    
                 }
             })
             .catch(error => { alert(error) });

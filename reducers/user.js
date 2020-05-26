@@ -79,9 +79,6 @@ const initialState = {
   },
 
   call911:true,
- 
-
-
 
 };
 
@@ -191,8 +188,8 @@ const handlers = {
         success = action.payload.success,
         userCheckIn.checkIn = true,
         userCheckIn.checkOut = false,
-        list.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
-        history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(CheckIN)'});
+        list.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1) +'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
+        history.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1) +'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(CheckIN)'});
         console.log('list',list)
         //list[0].date=new Date()
       return {
@@ -202,7 +199,7 @@ const handlers = {
     } else {
       failureMessage = "CHECKINFailure";
       return {
-        failureMessage: "",
+        failureMessage: "CHECKINFailure",
         responseTriggerred: true,
       };
     }
@@ -239,8 +236,8 @@ const handlers = {
         success = action.payload.success,
         userCheckIn.checkOut = true,
         userCheckIn.checkIn = false,
-        list.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
-        history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(CheckOUT)'});
+        list.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
+        history.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(CheckOUT)'});
         console.log('list',list)
         //list[0].date=new Date()
       return {
@@ -250,7 +247,7 @@ const handlers = {
     } else {
       failureMessage = "CHECKOUTFailure";
       return {
-        failureMessage: "",
+        failureMessage: "CHECKOUTFailure",
         successMessage,
         responseTriggerred: true,
       };
@@ -286,8 +283,8 @@ const handlers = {
     result = action.payload.result,
       targetUrl = action.payload.targetUrl,
       success = action.payload.success,
-      taglist.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
-      history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(UploadTAG)'});
+      taglist.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
+      history.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(UploadTAG)'});
       console.log('list',taglist)
       //list[0].date=new Date()
     return {
@@ -333,8 +330,8 @@ const handlers = {
       success = action.payload.success,
       userVisit.startVisit=true,
       userVisit.endVisit=false,
-      visitlist.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
-      history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(BeginVISIT)'});
+      visitlist.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
+      history.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(BeginVISIT)'});
       console.log('list',visitlist)
       //list[0].date=new Date()
     return {
@@ -383,8 +380,8 @@ const handlers = {
       success = action.payload.success,
       userVisit.startVisit=false,
       userVisit.endVisit=true,
-      visitlist.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
-      history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(EndVISIT)'});
+      visitlist.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
+      history.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(EndVISIT)'});
       console.log('list',visitlist)
       //list[0].date=new Date()
     return {
@@ -429,8 +426,8 @@ const handlers = {
     result = action.payload.result,
       targetUrl = action.payload.targetUrl,
       success = action.payload.success,
-      patrollist.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
-      history.push({"date": new Date().getDate()+'/'+new Date().getMonth()+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(Patrol)'});
+      patrollist.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds()});
+      history.push({"date": new Date().getDate()+'/'+parseInt(new Date().getMonth()+1)+'/'+new Date().getFullYear(), "time": new Date().getHours()+':'+new Date().getMinutes()+':'+new Date().getSeconds(),"subtitle":'(Patrol)'});
       console.log('patrollist',patrollist)
       //list[0].date=new Date()
     return {

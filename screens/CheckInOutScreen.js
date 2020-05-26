@@ -138,7 +138,7 @@ class CheckInOutScreen extends Component {
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => this.props.userCheckIn(this.state) }
+                  { text: "Yes", onPress: () => this.props.userCheckIn(this.state) }
                 ],
                 { cancelable: false }
               );
@@ -153,7 +153,7 @@ class CheckInOutScreen extends Component {
                     onPress: () => console.log("Cancel Pressed"),
                     style: "cancel"
                   },
-                  { text: "OK", onPress: () => this.props.userCheckOut(this.state) }
+                  { text: "Yes", onPress: () => this.props.userCheckOut(this.state) }
                 ],
                 { cancelable: false }
               );

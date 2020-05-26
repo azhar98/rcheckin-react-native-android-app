@@ -45,9 +45,9 @@ class IncidentScreen extends Component {
     }else if(this.state.Subject==""&&this.state.Content!=""){
       Alert.alert('Subject cannot be empty.')
     }else if(this.state.Content==""&&this.state.Subject!=""){
-      Alert.alert('Content cannot be empty.')
+      Alert.alert('Comment cannot be empty.')
     }else{
-      Alert.alert('Subject or content cannot be empty.')
+      Alert.alert('Subject and content cannot be empty.')
     }
   }
 

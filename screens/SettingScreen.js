@@ -56,6 +56,12 @@ class SettingScreen extends Component {
 
     render() {
         const { userDetails, responseTriggerred, successMessage, failureMessage, login, checkGps, checkQRCode, checkNfc, accountButton, mainButton, call911 } = this.props.userState;
+        let call911text;
+        if(call911===true){
+            call911text=<Text>Disable "Call 911" Button</Text>
+        }else{
+            call911text=<Text>Enable "Call 911" Button</Text>
+        }
         return (
             <View style={styles.container}>
                 <ImageBackground source={require('../assets/setting.png')} style={styles.backgroundImage}>
@@ -92,7 +98,7 @@ class SettingScreen extends Component {
 
                         <Header
                             leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
-                            centerComponent={{ text: 'Setting', style: { color: '#fff' } }}
+                            centerComponent={{ text: 'Settings', style: { color: '#fff' } }}
                             rightComponent={<Icon
                                 name='sign-out'
                                 type='font-awesome'
@@ -109,7 +115,7 @@ class SettingScreen extends Component {
                             </View>
                             <View style={{ flexDirection: 'row', backgroundColor: 'white', padding: 15, justifyContent: 'space-between', marginBottom: 2 }}>
                                 <View>
-                                    <Text>Enable "Call 911" Button</Text>
+                                    {call911text}
                                 </View>
                                 <View>
                                     <Switch

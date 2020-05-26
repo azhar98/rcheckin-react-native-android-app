@@ -96,8 +96,9 @@ class HomeScreen extends Component {
 
 
     let geoOptions = {
-      enableHighAccuracy: true,
-      timeOut: 20000, //20 second  
+      enableHighAccuracy: false,
+      timeOut: 20000,
+      //maximumAge: 3600000 //20 second  
       //  maximumAge: 1000 //1 second  
     };
     navigator.geolocation.getCurrentPosition(this.geoSuccess,
@@ -109,7 +110,7 @@ class HomeScreen extends Component {
 
     console.log('position', position);
     const location = [{
-      "date": new Date().getDate() + '/' + new Date().getMonth() + '/' + new Date().getFullYear(),
+      "date": new Date().getDate() + '/' + parseInt(new Date().getMonth()+1) + '/' + new Date().getFullYear(),
       "time": new Date().getHours() + ':' + new Date().getMinutes() + ':' + new Date().getSeconds(),
       "subtitle": "(GPS)"
     }]
