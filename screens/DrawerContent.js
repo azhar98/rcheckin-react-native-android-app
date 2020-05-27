@@ -40,11 +40,11 @@ export function DrawerContent(props) {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, }}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
-                        <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                        <View style={{ flexDirection: 'row', margin:15 }}>
                             <Image
                                 style={{ width: 50, height: 50, borderRadius: 50, }}
                                 source={require('../assets/user.png')}
@@ -143,12 +143,19 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     userInfoSection: {
-        paddingLeft: 20,
+        //paddingLeft: 20,
+        backgroundColor:'#2898fe',
+        marginLeft:5,
+        marginRight:5
     },
     title: {
-        fontSize: 16,
+        fontSize: 20,
         marginTop: 3,
         fontWeight: 'bold',
+        color:'white',
+        paddingTop:4
+        //textAlign:'center',
+        //justifyContent:'center'
     },
     caption: {
         fontSize: 14,

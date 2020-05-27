@@ -104,14 +104,14 @@ class LoginScreen extends Component {
                     this.props.updateState({ userDetails: data.result });
                     this.setState({loginButtonDisable:false})
                     this.props.navigation.navigate("HomeDrawer")
-                    Alert.alert(
-                        "Logged In",
-                        "You have been Successfully Logged In.",
-                        [
-                          { text: "OK", onPress: () => console.log("OK Pressed") }
-                        ],
-                        { cancelable: false }
-                      );
+                    // Alert.alert(
+                    //     "Logged In",
+                    //     "You have been Successfully Logged In.",
+                    //     [
+                    //       { text: "OK", onPress: () => console.log("OK Pressed") }
+                    //     ],
+                    //     { cancelable: false }
+                    //   );
                 } else {
                     
                     alert("Please enter valid user name and password.")
