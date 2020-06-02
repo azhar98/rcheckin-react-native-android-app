@@ -67,7 +67,7 @@ class LoginScreen extends Component {
         userDetails[id] = value;
         this.props.updateState({ userDetails });
         if (id === 'tenancyName') {
-            apiUrl[id] = value
+            apiUrl[id] = value.toLowerCase();
             this.props.updateState({ apiUrl })
         }
     }
