@@ -127,6 +127,8 @@ export function DrawerContent(props) {
                     )}
                     label="Sign Out"
                     onPress={() => { store.getState().userState.userDetails.length=0;
+                        store.getState().userState.userDetails.length=0;
+                    store.getState().userState.apiUrl.tenancyName="";
                     props.navigation.navigate('LoginScreen') }}
                 />
             </Drawer.Section>

@@ -17,18 +17,16 @@ import {
 } from 'react-native';
 navigator.geolocation = require('@react-native-community/geolocation');
 import BackgroundFetch from "react-native-background-fetch";
-import { URI } from '../constants';
+import { URI,PROTOCAL } from '../constants';
 import store from '../store/index';
 
 
 
 class HomeScreen extends Component {
 
-  componentWillUnmount() {
-
- }
 
   async componentDidMount() {
+    
     console.log('store',store)
     // Configure it.
     BackgroundFetch.configure({
@@ -48,22 +46,19 @@ class HomeScreen extends Component {
         this.geoFailure,
         geoOptions);
 
-      fetch(`${URI.checkInOrOut}`, {
+      fetch(PROTOCAL+this.props.userState.apiUrl.tenancyName+`${URI.uploadCurrentUserLocation}`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + this.props.userState.userDetails.ticket },
         body: JSON.stringify({
-          appType: 1,
-          eventType: 10,
-          trackTime: new Date().toISOString(),
+          gpsTrackTime: new Date().toISOString(),
           latitude: this.props.userState.coords.latitude,
           longitude: this.props.userState.coords.longitude,
           employeeId: this.props.userState.userDetails.employeeId,
-          tagType: null,
-          tagValue: null
+          gpsType:'mobile'
         })
       }).then(response => response.json())
         .then((data) => {
-          console.log("data", data);
+          console.log("uploadCurrentUserLocation", data);
         })
         .catch(error => dispatch(userCheckInFailure(error)));
       console.log('Background', this.props.userState)

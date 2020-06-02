@@ -217,7 +217,7 @@ class CheckInOutScreen extends Component {
 
             <View style={styles.container}>
                 <Header
-                    leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
+                    leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.props.navigation.navigate('Home')}}
                     centerComponent={{ text: 'Check In/Out', style: { color: '#fff' } }}
                     rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen') }}
                 />

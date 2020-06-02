@@ -1,6 +1,8 @@
+import store from '../store/index';
 export const Constants = {};
 
-export const HOST_NAME = 'http://test.bwacsys.com/api/';
+export const PROTOCAL = 'http://';
+export const HOST_NAME = '.bwacsys.com/api/';
 
 export const URI = {
 
@@ -11,4 +13,5 @@ export const URI = {
   uploadScannedTad:`${HOST_NAME}services/bwac/mobileTagScratchPad/UploadScannedTagId`,
   patrol:`${HOST_NAME}services/bwac/mobileGpsPatrol/MobilePatrol`,  
   incident:`${HOST_NAME}services/bwac/mobileGpsPatrol/Incident`,  
+  uploadCurrentUserLocation:`${HOST_NAME}services/bwac/mobileGpsTrack/UploadCurrentUserLocation`,  
 }

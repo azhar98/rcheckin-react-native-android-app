@@ -56,7 +56,7 @@ class History extends Component {
     return (
       <View style={styles.container}>
       <Header
-            leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer()}}
+            leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen')}}
             centerComponent={{ text: 'History', style: { color: '#fff' } }}
             rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('SettingScreen')}}
         />

@@ -70,7 +70,7 @@ class IncidentScreen extends Component {
     return (
       <View style={{ flex: 1, }}>
         <Header
-          leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
+          leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.props.navigation.navigate('Home')}}
           centerComponent={{ text: 'Incident', style: { color: '#fff' } }}
           rightComponent={{ icon: 'settings', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen') }}
         />

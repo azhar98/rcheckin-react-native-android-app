@@ -1,6 +1,6 @@
 //import { doGet, doDelete, doPut, doPost } from '../api/utils';
 import { USER_TYPE } from '../constants/actionReducerConstants';
-import { URI } from '../constants';
+import { URI,PROTOCAL } from '../constants';
 
 // ================ For Update State ====================
 export function updateState(payload) {
@@ -14,7 +14,7 @@ export function updateState(payload) {
 export function userLogin() {
   return (dispatch, getState) => {
     const { userDetails } = getState().userState;
-    fetch(`${URI.login}`, {
+    fetch(PROTOCAL+this.props.userState.apiUrl.tenancyName+`${URI.login}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -43,10 +43,10 @@ export function userLoginFailure(error) {
 
 // ================ For Registation ====================
 export function userRegistration() {
-  debugger
+  
   return (dispatch, getState) => {
     const { userDetails } = getState().userState;
-    fetch(`${URI.registration}`, {
+    fetch(PROTOCAL+this.props.userState.apiUrl.tenancyName+`${URI.registration}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
@@ -83,10 +83,10 @@ export function userRegistrationFailure(error) {
 // ================ For CheckIn ====================
 export function userCheckIn(state) {
   console.log('state', state)
-  debugger
+  
   return (dispatch, getState) => {
-    const { userDetails, coords } = getState().userState;
-    fetch(`${URI.checkInOrOut}`, {
+    const { userDetails, coords,apiUrl } = getState().userState;
+    fetch(PROTOCAL+apiUrl.tenancyName+`${URI.checkInOrOut}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({
@@ -123,8 +123,8 @@ export function userCheckInFailure(error) {
 export function userCheckOut(state) {
   console.log('state', state)
   return (dispatch, getState) => {
-    const { userDetails, coords } = getState().userState;
-    fetch(`${URI.checkInOrOut}`, {
+    const { userDetails, coords,apiUrl } = getState().userState;
+    fetch(PROTOCAL+apiUrl.tenancyName+`${URI.checkInOrOut}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({
@@ -162,8 +162,8 @@ export function userBeginVisit(state) {
   console.log('state', state)
   
   return (dispatch, getState) => {
-    const { userDetails, coords } = getState().userState;
-    fetch(`${URI.visitSite}`, {
+    const { userDetails, coords,apiUrl } = getState().userState;
+    fetch(PROTOCAL+apiUrl.tenancyName+`${URI.visitSite}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({
@@ -199,15 +199,15 @@ export function userBeginVisitFailure(error) {
 // ================ For EndVisit ====================
 export function userEndVisit(state) {
   console.log('state', state)
-  debugger
+  
   return (dispatch, getState) => {
-    const { userDetails, coords } = getState().userState;
-    fetch(`${URI.visitSite}`, {
+    const { userDetails, coords,apiUrl } = getState().userState;
+    fetch(PROTOCAL+apiUrl.tenancyName+`${URI.visitSite}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({
         appType: 1,
-        eventType: 20,
+        eventType: 40,
         trackTime: new Date().toISOString(),
         latitude: coords.latitude,
         longitude: coords.longitude,
@@ -240,8 +240,8 @@ export function userUploadScannedTag(state) {
   ;
   console.log('state', state)
   return (dispatch, getState) => {
-    const { userDetails,tag, coords } = getState().userState;
-    fetch(`${URI.uploadScannedTad}`, {
+    const { userDetails,tag, coords,apiUrl } = getState().userState;
+    fetch(PROTOCAL+apiUrl.tenancyName+`${URI.uploadScannedTad}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({
@@ -280,8 +280,8 @@ export function userPatrol(state) {
   console.log('state', state)
   
   return (dispatch, getState) => {
-    const { userDetails, coords } = getState().userState;
-    fetch(`${URI.patrol}`, {
+    const { userDetails, coords,apiUrl } = getState().userState;
+    fetch(PROTOCAL+apiUrl.tenancyName+`${URI.patrol}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({
@@ -321,8 +321,8 @@ export function userIncident(state) {
   console.log('state', state)
   
   return (dispatch, getState) => {
-    const { userDetails, coords } = getState().userState;
-    fetch(`${URI.incident}`, {
+    const { userDetails, coords,apiUrl } = getState().userState;
+    fetch(PROTOCAL+apiUrl.tenancyName+`${URI.incident}`, {
       method: 'post',
       headers: { 'Content-Type': 'application/json','Authorization':'Bearer '+userDetails.ticket },
       body: JSON.stringify({

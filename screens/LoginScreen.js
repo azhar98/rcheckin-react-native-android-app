@@ -20,7 +20,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import styles from '../StyleSheets/LoginStyle';
-import { URI } from '../constants';
+import { URI, PROTOCAL } from '../constants';
 import { Button } from 'react-native-elements';
 
 
@@ -28,8 +28,8 @@ class LoginScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
-            loginButtonDisable:false,
+        this.state = {
+            loginButtonDisable: false,
         }
         this.handleBackButton = this.handleBackButton.bind(this);
     }
@@ -43,8 +43,8 @@ class LoginScreen extends Component {
     }
 
     handleBackButton() {
-        console.log('nav',this.props)
-        if (this.props.route.name=="LoginScreen") {
+        console.log('nav', this.props)
+        if (this.props.route.name == "LoginScreen") {
             this.props.navigation.navigate("LoginScreen")
         } else {
             this.props.navigation.navigate("LoginScreen")
@@ -63,16 +63,26 @@ class LoginScreen extends Component {
 
     onValueChangeLogin = (value, id) => {
         const { userDetails } = this.props.userState;
+        const { apiUrl } = this.props.userState;
         userDetails[id] = value;
         this.props.updateState({ userDetails });
+        if (id === 'tenancyName') {
+            apiUrl[id] = value
+            this.props.updateState({ apiUrl })
+        }
     }
 
 
     onValueChangeRegistration = (value, id) => {
         const { userDetails } = this.props.userState;
+        const { apiUrl } = this.props.userState;
         userDetails[id] = value;
         this.props.updateState({ userDetails });
-        console.log('details', userDetails)
+        if (id === 'tenancyName') {
+            apiUrl[id] = value
+            this.props.updateState({ apiUrl })
+        }
+        console.log('details', this.props.userState)
     }
 
     onClickListener(viewId) {
@@ -86,9 +96,13 @@ class LoginScreen extends Component {
     }
 
     login() {
-        this.setState({loginButtonDisable:true})
+        if(this.props.userState.apiUrl.tenancyName==null||this.props.userState.apiUrl.tenancyName==""){
+            alert("Please enter a tenancy name.");
+            return;
+        }
+        this.setState({ loginButtonDisable: true })
         const { userDetails } = this.props.userState;
-        fetch(`${URI.login}`, {
+        fetch(PROTOCAL + this.props.userState.apiUrl.tenancyName + `${URI.login}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -102,7 +116,7 @@ class LoginScreen extends Component {
                 console.log('data', data)
                 if (data.success == true) {
                     this.props.updateState({ userDetails: data.result });
-                    this.setState({loginButtonDisable:false})
+                    this.setState({ loginButtonDisable: false })
                     this.props.navigation.navigate("HomeDrawer")
                     // Alert.alert(
                     //     "Logged In",
@@ -113,21 +127,21 @@ class LoginScreen extends Component {
                     //     { cancelable: false }
                     //   );
                 } else {
-                    
-                    alert("Please enter valid user name and password.")
-                    this.setState({loginButtonDisable:false})
+
+                    alert("Please enter a valid user name or password.")
+                    this.setState({ loginButtonDisable: false })
                 }
 
             })
-            .catch((error) => { alert(error) });
-            this.setState({loginButtonDisable:false})
+            .catch((error) => { alert('Please enter valid details.') });
+        this.setState({ loginButtonDisable: false })
     }
 
 
     registration() {
-        debugger;
+        ;
         const { userDetails } = this.props.userState;
-        fetch(`${URI.registration}`, {
+        fetch(PROTOCAL + this.props.userState.apiUrl.tenancyName + `${URI.registration}`, {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
@@ -143,23 +157,23 @@ class LoginScreen extends Component {
             .then(response => response.json())
             .then(data => {
                 console.log('data', data);
-                if (data.success == true && data.error==null) {
+                if (data.success == true && data.error == null) {
                     Alert.alert(
                         "Registered",
-                        "You have been Successfully Registered.",
+                        "You have successfully registere.",
                         [
-                          { text: "OK", onPress: () => console.log("OK Pressed") }
+                            { text: "OK", onPress: () => console.log("OK Pressed") }
                         ],
                         { cancelable: false }
-                      );
+                    );
                 } else {
-                    if(data.error.message==="Email '5727_dummy@bcsint.com' is already taken."){
+                    if (data.error.message === "Email '5727_dummy@bcsint.com' is already taken.") {
                         alert("The user with the same telephone number is already registered.")
                     }
-                    else{
+                    else {
                         alert(data.error.message)
                     }
-                    
+
                 }
             })
             .catch(error => { alert(error) });
@@ -180,7 +194,13 @@ class LoginScreen extends Component {
         let content;
         if (login) {
             content =
-                <View style={styles.viewContainer}>
+                <View style={[styles.viewContainer,]}>
+                    <View style={styles.inputContainer}>
+                        <TextInput style={styles.inputs}
+                            placeholder="TENANCY NAME"
+                            value={userDetails.tenancyName}
+                            onChangeText={(e) => this.onValueChangeLogin(e, 'tenancyName')} />
+                    </View>
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="USERNAME"

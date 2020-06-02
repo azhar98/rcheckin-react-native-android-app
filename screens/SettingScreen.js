@@ -51,6 +51,8 @@ class SettingScreen extends Component {
 
     logout() {
         this.props.userState.userDetails.length=0;
+        this.props.userState.apiUrl.tenancyName="";
+        this.props.userState.history.length=0;
         this.props.navigation.navigate('LoginScreen');
     }
 
