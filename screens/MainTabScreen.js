@@ -63,7 +63,7 @@ const MainTabScreen = () => (
         name="Patrol"
         component={PatrollScreen}
         options={{
-          tabBarLabel: 'Patroll',
+          tabBarLabel: 'Patrol',
           tabBarColor: '#d02860',
           tabBarIcon: ({ color }) => (
             <Icon name="ios-people" color={color} size={26} />

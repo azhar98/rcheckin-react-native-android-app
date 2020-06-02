@@ -99,7 +99,7 @@ class SettingScreen extends Component {
                         </View> */}
 
                         <Header
-                            leftComponent={{ icon: 'menu', color: '#fff', onPress: () => this.props.navigation.openDrawer() }}
+                            leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.props.navigation.navigate('Home')}}
                             centerComponent={{ text: 'Settings', style: { color: '#fff' } }}
                             rightComponent={<Icon
                                 name='sign-out'

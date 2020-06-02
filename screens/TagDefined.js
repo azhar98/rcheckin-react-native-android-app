@@ -98,7 +98,7 @@ class TagDefined extends Component {
             <Header
             leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.props.navigation.navigate('SettingScreen')}}
             centerComponent={{ text: 'Tag Defined', style: { color: '#fff' } }}
-            rightComponent={{ icon: 'settings', color: '#fff',onPress: () => this.props.navigation.navigate('SettingScreen')}}
+            
         />
                 <View style={{ height: 50, backgroundColor: '#f4f0f0d6', justifyContent: 'center', paddingLeft: 10, }}>
                     <Text style={{ fontWeight: 'bold' }}>Tags Name</Text>

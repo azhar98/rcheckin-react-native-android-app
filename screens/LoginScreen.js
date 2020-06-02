@@ -64,11 +64,13 @@ class LoginScreen extends Component {
     onValueChangeLogin = (value, id) => {
         const { userDetails } = this.props.userState;
         const { apiUrl } = this.props.userState;
-        userDetails[id] = value;
-        this.props.updateState({ userDetails });
+        
         if (id === 'tenancyName') {
             apiUrl[id] = value.toLowerCase();
             this.props.updateState({ apiUrl })
+        }else{
+            userDetails[id] = value;
+            this.props.updateState({ userDetails });
         }
     }
 
@@ -190,7 +192,7 @@ class LoginScreen extends Component {
     }
 
     render() {
-        const { userDetails, responseTriggerred, successMessage, failureMessage, login } = this.props.userState;
+        const { userDetails, responseTriggerred, successMessage, failureMessage, login,apiUrl } = this.props.userState;
         let content;
         if (login) {
             content =
@@ -198,7 +200,7 @@ class LoginScreen extends Component {
                     <View style={styles.inputContainer}>
                         <TextInput style={styles.inputs}
                             placeholder="TENANCY NAME"
-                            value={userDetails.tenancyName}
+                            value={apiUrl.tenancyName}
                             onChangeText={(e) => this.onValueChangeLogin(e, 'tenancyName')} />
                     </View>
                     <View style={styles.inputContainer}>
